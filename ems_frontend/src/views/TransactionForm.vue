@@ -7,12 +7,12 @@
 
     <div class="p-field">
       <label for="type">Type</label>
-      <Dropdown id="type" :options="types" optionLabel="label" optionValue="value" v-model="form.type" @change="fetchCategories"/>
+      <Select id="type" :options="types" optionLabel="label" optionValue="value" v-model="form.type" @change="fetchCategories"/>
     </div>
 
     <div class="p-field">
       <label for="category">Category</label>
-      <Dropdown id="category" :options="categories" v-model="form.category"/>
+      <Select id="category" :options="categories" v-model="form.category"/>
     </div>
 
     <div class="p-field">
