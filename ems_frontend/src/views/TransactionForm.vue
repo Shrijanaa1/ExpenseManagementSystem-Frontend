@@ -23,7 +23,7 @@
 
     <div class="button-row">
       <Button label="Save" type="submit" icon="pi pi-save" class="save-button"/>
-      <Button label="Cancel" type="button" icon="pi pi-times" class="cancel-button" @click="closeForm"/>
+      <Button label="Cancel" type="button" icon="pi pi-times" class="cancel-button" @click="$emit('close')"/>
     </div>
   </form>
   </div>

@@ -18,9 +18,17 @@
       </Column>
     </DataTable>
 
-    <Dialog header="Transaction" :visible="dialogVisible" @hide="dialogVisible = false">
-      <TransactionForm :transaction="selectedTransaction" @save="saveTransaction"/>
+    <!-- Dialog for adding/editing a transaction -->
+    <Dialog
+      header="Transaction"
+      :visible="dialogVisible"
+      @hide="closeDialog"
+      @close="closeDialog"
+      :closable="true"
+    >
+      <TransactionForm :transaction="selectedTransaction" @save="saveTransaction" @close="closeDialog"/>
     </Dialog>
+
   </div>
 </template>
 
@@ -34,6 +42,7 @@ const selectedTransaction = ref(null);
 const dialogVisible = ref(false);
 const errorMessage = ref(null);  // New state for errors
 
+// Load transactions initially
 const loadTransactions = async () => {
   try {
     const response = await transactionService.getAll();
@@ -44,16 +53,24 @@ const loadTransactions = async () => {
   }
 };
 
+// Open dialog for new transaction
 const openDialog = () => {
   selectedTransaction.value = { amount: 0, type: 'INCOME', category: 'SALARY', description: '' };
   dialogVisible.value = true;
 };
 
+// Close dialog
+const closeDialog = () => {
+  dialogVisible.value = false;
+};
+
+// Edit transaction
 const editTransaction = (transaction) => {
   selectedTransaction.value = { ...transaction };
   dialogVisible.value = true;
 };
 
+//save transaction and reload list
 const saveTransaction = async (transaction) => {
   try {
     if (transaction.id) {
@@ -69,6 +86,7 @@ const saveTransaction = async (transaction) => {
   }
 };
 
+//Delete transaction
 const deleteTransaction = async (id) => {
   try {
     await transactionService.delete(id);
@@ -86,4 +104,5 @@ onMounted(loadTransactions);
 .edit-button{
   padding: 5px;
 }
+
 </style>
