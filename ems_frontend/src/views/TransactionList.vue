@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2>Transaction List</h2>
+
+    <Button label="Add Transaction" icon="pi pi-plus" class="p-button-sm p-mt-3" @click="openDialog"/>
+
     <DataTable :value="transactions" responsiveLayout="scroll">
       <Column field="id" header="ID"></Column>
       <Column field="amount" header="Amount"></Column>
@@ -9,13 +12,12 @@
       <Column field="description" header="Description"></Column>
       <Column header="Actions">
         <template #body="slotProps">
-          <Button label="Edit" icon="pi pi-pencil" class="p-button-sm" @click="editTransaction(slotProps.data)"/>
+          <Button label="Edit" icon="pi pi-pencil" class="p-button-sm edit-button" @click="editTransaction(slotProps.data)"/>
           <Button label="Delete" icon="pi pi-trash" class="p-button-sm p-button-danger" @click="deleteTransaction(slotProps.data.id)"/>
         </template>
       </Column>
     </DataTable>
 
-    <Button label="Add Transaction" icon="pi pi-plus" class="p-button-sm p-mt-3" @click="openDialog"/>
     <Dialog header="Transaction" :visible="dialogVisible" @hide="dialogVisible = false">
       <TransactionForm :transaction="selectedTransaction" @save="saveTransaction"/>
     </Dialog>
@@ -79,3 +81,9 @@ const deleteTransaction = async (id) => {
 
 onMounted(loadTransactions);
 </script>
+
+<style scoped>
+.edit-button{
+  padding: 5px;
+}
+</style>
