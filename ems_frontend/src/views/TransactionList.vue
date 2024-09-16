@@ -22,8 +22,7 @@
     <Dialog
       header="Transaction"
       :visible="dialogVisible"
-      @hide="closeDialog"
-      @close="closeDialog"
+      @hide="closeDialog" 
       :closable="true"
     >
       <TransactionForm :transaction="selectedTransaction" @save="saveTransaction" @close="closeDialog"/>
@@ -61,7 +60,7 @@ const openDialog = () => {
 
 // Close dialog
 const closeDialog = () => {
-  dialogVisible.value = false;
+  dialogVisible.value = false; // Set dialogVisible to false when closing the dialog
 };
 
 // Edit transaction
@@ -104,5 +103,6 @@ onMounted(loadTransactions);
 .edit-button{
   padding: 5px;
 }
+
 
 </style>

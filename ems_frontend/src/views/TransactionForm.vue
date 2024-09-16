@@ -33,11 +33,12 @@
 import { ref, watch } from 'vue';
 import transactionService from '@/router/transactionService';
 
+
 const props = defineProps({
   transaction: Object,
 });
 
-const emit = defineEmits(['save']);
+const emit = defineEmits(['save', 'close']);
 
 const form = ref({ ...props.transaction });
 
