@@ -73,51 +73,80 @@ const closeForm = () => {
 <style scoped>
 
 .form-wrapper {
-  background-color: #f7f7f7;
-  padding: 20px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  padding: 40px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  max-width: 600px;
+  margin: auto;
 }
 
-.labels{
+.labels {
   font-weight: bold;
-  padding-right: 100px;
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #4a4a4a;
 }
 
 .input-field {
-  flex: 1;
-  padding: 5px;
-  margin-bottom: 10px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  transition: all 0.3s;
 }
 
-/* Adding custom styling for the Save button */
+.input-field:focus {
+  border-color: #007ad9;
+  background-color: #e8f0fe;
+}
+
+.description-field {
+  min-height: 100px;
+}
+
 .button-row {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.save-button,
+.cancel-button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .save-button {
-  padding: 10px 20px;
-  margin: 2px;
   background-color: #007ad9;
   color: white;
-  font-size: 1rem;
 }
 
 .cancel-button {
-  padding: 10px 20px;
-  margin: 2px;
   background-color: #ff4d4f;
   color: white;
-  font-size: 1rem;
 }
 
 .save-button:hover {
   background-color: #005ea7;
+  transform: translateY(-2px);
 }
 
 .cancel-button:hover {
   background-color: #d43f3a;
+  transform: translateY(-2px);
 }
 
+/* Add hover effect to input fields */
+.input-field:hover {
+  background-color: #fafafa;
+}
 </style>

@@ -22,7 +22,6 @@
     <Dialog
       header="Transaction"
       v-model:visible="dialogVisible"
-      @hide="closeDialog" 
       :closable="true"
     >
 
@@ -66,7 +65,6 @@ const openDialog = () => {
 
 // Close dialog
 const closeDialog = () => {
-  console.log("Dialog is closing");
   dialogVisible.value = false; // Set dialogVisible to false when closing the dialog
 };
 
