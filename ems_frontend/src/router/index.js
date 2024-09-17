@@ -14,7 +14,7 @@ const router = createRouter({
       path: '/transactionFormWithVeeValidate',
       name: 'transactionFormWithVeeValidate',
       component: TransactionFormWithVeeValidate
-    }
+    },
   ]
 })
 

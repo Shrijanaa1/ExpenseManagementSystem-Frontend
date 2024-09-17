@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vee-validate/rules": "^4.13.2",
     "axios": "^1.7.7",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.7",
