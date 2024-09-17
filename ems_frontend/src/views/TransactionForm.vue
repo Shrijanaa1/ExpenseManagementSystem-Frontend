@@ -93,10 +93,22 @@ const formErrors = ref({
 
 // Yup schema for validation
 const schema = yup.object().shape({
-  amount: yup.number().required('Amount is required').positive('Amount must be positive'),
-  type: yup.string().required('Type is required'),
-  category: yup.string().required('Category is required'),
-  description: yup.string().min(2, 'Description must be at least 2 characters').required('Description is required')
+  amount: yup
+    .number()
+    .required('Amount is required')
+    .positive('Amount must be positive'),
+  type: yup
+    .string()
+    .required('Type is required'),
+  category: yup
+    .string()
+    .required('Category is required'),
+  description: yup
+    .string()
+    .min(2, 'Description must be at least 2 characters')
+    .trim('Description cannot include leading or trailing spaces') //Trim spaces
+    .required('Description is required')
+    .matches(/^[a-zA-Z0-9 ]*$/, 'Description can only contain letters, numbers and spaces') //Custom validation
 });
 
 const fetchCategories = async () => {
@@ -151,7 +163,6 @@ const handleSubmit = async () => {
   background-color: #ffffff;
   padding: 40px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
   max-width: 600px;
   margin: auto;
 }
