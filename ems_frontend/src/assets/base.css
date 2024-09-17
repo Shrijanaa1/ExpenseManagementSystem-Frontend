@@ -1,0 +1,21 @@
+:root {
+    --navbar-bg-color: #1e1e2f;
+    --text-color: #fff;
+  }
+  
+  [data-theme='light'] {
+    --navbar-bg-color: #fff;
+    --text-color: #000;
+  }
+  
+  [data-theme='dark'] {
+    --navbar-bg-color: #1e1e2f;
+    --text-color: #fff;
+  }
+
+  /* Apply text color globally // change only header*/
+/* body {
+    color: var(--text-color);
+  } */
+  
+  
