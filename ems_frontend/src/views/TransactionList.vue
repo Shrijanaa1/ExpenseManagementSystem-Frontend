@@ -21,11 +21,12 @@
     <!-- Dialog for adding/editing a transaction -->
     <Dialog
       header="Transaction"
-      :visible="dialogVisible"
+      v-model:visible="dialogVisible"
       @hide="closeDialog" 
       :closable="true"
     >
 
+    <!-- To change default header of give custom view -->
     <!-- <template #header> 
       Test
     </template> -->
@@ -37,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'; //ref: reactive references // onMounted: lifecycle hook that runs when component is mounted
+import { ref, onMounted} from 'vue'; //ref: reactive references // onMounted: lifecycle hook that runs when component is mounted
 import transactionService from '../router/transactionService';  //handles API requests to manage transaction
 import TransactionForm from './TransactionForm.vue';
 
@@ -65,7 +66,7 @@ const openDialog = () => {
 
 // Close dialog
 const closeDialog = () => {
-  console.log("close")
+  console.log("Dialog is closing");
   dialogVisible.value = false; // Set dialogVisible to false when closing the dialog
 };
 
