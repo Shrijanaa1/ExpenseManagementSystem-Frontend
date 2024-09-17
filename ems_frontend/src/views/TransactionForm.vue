@@ -7,14 +7,14 @@
       <div class="p-field">
         <label for="amount" class="labels">Amount</label>
         <Field name="amount" rules="required|min_value:0.01" v-slot="{ field, errorMessage }">
+          <!-- Using InputNumber in standard mode, without currency formatting -->
           <InputNumber 
             id="amount" 
             v-bind="field" 
-            :value="form.amount" 
-            mode="currency" 
-            currency="NPR" 
-            @input="(e) => form.amount = parseFloat(e.value)" 
+            v-model.number="form.amount"  
+            :min="0.01" 
             class="input-field" 
+            @input="updateAmount"
           />
           <ErrorMessage name="amount" class="error" />
         </Field>
@@ -97,18 +97,32 @@ const fetchCategories = async () => {
   categories.value = response.data;
 };
 
-const submitForm = (values) => {
+// const submitForm = (values) => {
+//   emit('save', form.value);
+// };
+
+const submitForm = () => {
+  // Parse amount value to float to ensure it's valid
+  form.value.amount = parseFloat(form.value.amount);
   emit('save', form.value);
 };
 
+//Watcher to updaate form state
 watch(() => props.transaction, (newValue) => {
   form.value = { ...newValue };
   fetchCategories();
 }, { immediate: true });
 
+// Update amount to ensure a numeric value is always passed
+const updateAmount = (e) => {
+  form.value.amount = parseFloat(e.value);
+};
+
+//Validate configuratio
 configure({
   validateOnInput: true,
 });
+
 </script>
 
 <style scoped>
