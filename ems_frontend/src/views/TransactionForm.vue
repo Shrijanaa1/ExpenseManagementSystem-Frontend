@@ -140,7 +140,7 @@ const validateField = async (field) => {
 };
 
 //blur event bata garne
-//dpn't use watcher// separate
+//dpn't use watcher// separate Currency and number (stirng and number mismatched)
 
 
 //Trigger validation for individual fields when their values change
