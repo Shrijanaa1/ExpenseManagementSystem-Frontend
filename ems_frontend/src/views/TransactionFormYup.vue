@@ -3,13 +3,15 @@
     <form @submit.prevent="handleSubmit" class="form-container"> <!-- Prevents default form submission(or form reload) and triggers handleSubmit-->
       <div class="p-field">
         <label for="amount" class="labels">Amount</label>
-        <InputNumber 
-          id="amount" 
-          v-model="form.amount" 
-          mode="currency" 
-          currency="NPR" 
-          class="input-field" 
-        />
+        <div class="amount-wrapper">
+          <span class="currency-label">NPR</span>
+          <InputNumber 
+            id="amount" 
+            v-model="form.amount" 
+            class="input-field" 
+         />
+        </div>
+        
         <div v-if="formErrors.amount" class="error">{{ formErrors.amount }}</div>  <!-- For displaying error message  -->
       </div>
 
@@ -133,10 +135,6 @@ const validateField = async (field) => {
   }
 };
 
-//blur event bata garne
-//dpn't use watcher// separate Currency and number (stirng and number mismatched)
-
-
 //Trigger validation for individual fields when their values change
 watch(() => form.value.amount, () => validateField('amount'));
 watch(() => form.value.type, () => validateField('type'));
@@ -182,6 +180,17 @@ const handleSubmit = async () => {
   font-weight: bold;
   display: inline-block;
   margin-bottom: 5px;
+  color: #4a4a4a;
+}
+
+.amount-wrapper{
+  display: flex;
+  align-items: center;
+}
+
+.currency-label{
+  margin-right: 3px;
+  font-weight: bold;
   color: #4a4a4a;
 }
 
