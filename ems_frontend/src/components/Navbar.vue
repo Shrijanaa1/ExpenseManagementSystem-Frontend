@@ -6,7 +6,7 @@
           <Menubar :model="items">
             <template #start>
 
-              <Button icon="pi pi-bars" class="hamburger-menu" @click="toggleSidebar"/>
+              <Button v-if="!sidebarVisible" icon="pi pi-bars" class="hamburger-menu" @click="toggleSidebar"/>
               <!-- Logo on the left side -->
               <img src="@/assets/expense1.png" alt="Logo" class="logo"/>
             </template>
