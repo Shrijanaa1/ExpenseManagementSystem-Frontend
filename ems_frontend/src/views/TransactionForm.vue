@@ -6,17 +6,19 @@
       <!-- Amount Field -->
       <div class="p-field">
         <label for="amount" class="labels">Amount</label>
-        <Field name="amount" rules="required|min_value:0.01" v-slot="{ field, errorMessage }">  <!-- The slot provides access to field (binding the field input) and errorMessage (displays validation errors for this specific field)-->
-          <!-- Using InputNumber in standard mode, without currency formatting -->
-          <!-- v-bind="field": Dynamically binds all necessary attributes and events for the form field-->
-          <InputNumber 
-            id="amount" 
-            v-bind="field" 
-            v-model.number="form.amount"  
-            class="input-field" 
-            @input="updateAmount"
-          />
-          <ErrorMessage name="amount" class="error" /> <!-- For displaying error message -->
+        <Field name="amount" rules="required|min_value:0.01" v-slot="{ field, errorMessage }">  
+          <div class="amount-wrapper">
+            <span class="currency-label">NPR</span>
+            <InputNumber 
+              id="amount" 
+              v-model="form.amount"
+              v-bind="{ ...field, value: undefined }" 
+              :min="0.01"
+              class="input-field" 
+              @input="field.onInput"
+            />
+          </div>
+          <ErrorMessage name="amount" class="error" />
         </Field>
       </div>
 
@@ -97,13 +99,7 @@ const fetchCategories = async () => {
   categories.value = response.data;
 };
 
-// const submitForm = (values) => {
-//   emit('save', form.value);
-// };
-
 const submitForm = () => {
-  // Parse amount value to float to ensure it's valid
-  form.value.amount = parseFloat(form.value.amount);
   emit('save', form.value);
 };
 
@@ -113,12 +109,6 @@ watch(() => props.transaction, (newValue) => {
   fetchCategories();
 }, { immediate: true });
 
-
-// Update amount to ensure a numeric value is always passed
-//Prevents invalid or non-numeric values
-const updateAmount = (e) => {
-  form.value.amount = parseFloat(e.value);
-};
 
 //Validate configuration to validate fields on every input change
 configure({
@@ -154,6 +144,17 @@ configure({
   box-sizing: border-box;
   margin-bottom: 15px;
   transition: all 0.3s;
+}
+
+.amount-wrapper{
+  display: flex;
+  align-items: center;
+}
+
+.currency-label{
+  margin-right: 3px;
+  font-weight: bold;
+  color: #4a4a4a;
 }
 
 .input-field:focus {
