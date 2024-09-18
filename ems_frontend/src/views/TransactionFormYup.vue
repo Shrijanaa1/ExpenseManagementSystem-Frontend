@@ -9,6 +9,7 @@
             id="amount" 
             v-model="form.amount" 
             class="input-field" 
+            @blur="validateField('amount')"
          />
         </div>
         
@@ -23,7 +24,8 @@
           optionLabel="label" 
           optionValue="value" 
           v-model="form.type" 
-          @change="fetchCategories" 
+          @change="fetchCategories"
+          @blur="validateField('type')" 
           class="input-field" 
         />
         <div v-if="formErrors.type" class="error">{{ formErrors.type }}</div>
@@ -35,6 +37,7 @@
           id="category" 
           :options="categories" 
           v-model="form.category" 
+          @blur="validateField('category')"
           class="input-field" 
         />
         <div v-if="formErrors.category" class="error">{{ formErrors.category }}</div>
@@ -45,6 +48,7 @@
         <InputText 
           id="description" 
           v-model="form.description" 
+          @blur="validateField('description')"
           class="input-field" 
         />
         <div v-if="formErrors.description" class="error">{{ formErrors.description }}</div>
@@ -118,14 +122,14 @@ const fetchCategories = async () => {
   categories.value = response.data;
 };
 
-//Watch for changes in the transaction prop and update the form accordingly
-watch(() => props.transaction, (newValue) => {
-  form.value = { ...newValue };   //New value copied to form.value
-  fetchCategories();
-}, { immediate: true }); //so that watcher runs immediately when the component is mounted
+// //Watch for changes in the transaction prop and update the form accordingly
+// watch(() => props.transaction, (newValue) => {
+//   form.value = { ...newValue };   //New value copied to form.value
+//   fetchCategories();
+// }, { immediate: true }); //so that watcher runs immediately when the component is mounted
 
 
-//Validate a specific field in the form when it changes
+//Validate a specific field when blur event is triggered
 const validateField = async (field) => {
   try {
     await schema.validateAt(field, form.value); //validates the specific field in the form.value object against the schema rules defined 
