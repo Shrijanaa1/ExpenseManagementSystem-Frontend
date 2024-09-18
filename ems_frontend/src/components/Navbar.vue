@@ -49,9 +49,9 @@
   // Menu Items for Top Navbar
   const items = ref([
       {
-          label: 'Home',
-          icon: 'pi pi-home',
-          command: () => { router.push({ name: 'home' }) } //Navigate to home
+        label: 'Home',
+        icon: 'pi pi-home',
+        command: () => { router.push({ name: 'home' }) } //Navigate to home
       },
       {
         label: 'Transactions',
@@ -123,13 +123,19 @@
     }
   ]);
 
-  //Sidebar Visibility State
-  const sidebarVisible = ref(false);
+  // //Sidebar Visibility State
+  // const sidebarVisible = ref(false);
 
-  //Toggle Sidebar
-  const toggleSidebar = () => {
-    sidebarVisible.value = !sidebarVisible.value;
-  }
+  // //Toggle Sidebar
+  // const toggleSidebar = () => {
+  //   sidebarVisible.value = !sidebarVisible.value;
+  // }
+
+  //Props to accept sidebar state and toggle function
+  const props = defineProps ({
+    sidebarVisible: Boolean,
+    toggleSidebar: Function,
+  });
 
   // Methods to handle theme switching
   const setLightTheme = () => {
@@ -193,12 +199,6 @@
   .close-sidebar{
     margin: 1rem;
   }
-
-/* .sidebar-menubar{
-  display: flex !important;
-  flex-direction: column;
-  padding: 1rem;
-} */
 
 .sidebar-menubar .p-menubar{
   display: block;
