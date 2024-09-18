@@ -107,14 +107,8 @@ const schema = yup.object().shape({
   description: yup
     .string()
     .min(2, 'Description must be at least 2 characters')
-    // .trim('Description cannot include leading or trailing spaces') //Trim spaces
     .required('Description is required')
-    .matches(/^[a-zA-Z0-9 ]*$/, 'Description can only contain letters, numbers and spaces') //Custom validation
-    .test(
-      'no-leading-trailing-spaces',
-      'Description cannot include leading or trailing spaces',
-      (value) => value === value.trim()
-    )
+    .matches(/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/, 'Description can only contain letters, numbers and spaces, and cannot start or end with spaces') //Custom validation
 });
 
 const fetchCategories = async () => {

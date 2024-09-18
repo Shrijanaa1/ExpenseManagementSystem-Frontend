@@ -107,9 +107,8 @@ const schema = yup.object().shape({
   description: yup
     .string()
     .min(2, 'Description must be at least 2 characters')
-    .trim('Description cannot include leading or trailing spaces') //Trim spaces
     .required('Description is required')
-    .matches(/^[a-zA-Z0-9 ]*$/, 'Description can only contain letters, numbers and spaces') //Custom validation
+    .matches(/^[a-zA-Z0-9]+(?: [a-zA-Z0-9]+)*$/, 'Description can only contain letters, numbers and spaces, and cannot start or end with spaces') //Custom validation
 });
 
 const fetchCategories = async () => {
@@ -133,6 +132,10 @@ const validateField = async (field) => {
     formErrors.value[field] = err.message; //If validation fails, display the error in the UI
   }
 };
+
+//blur event bata garne
+//dpn't use watcher// separate Currency and number (stirng and number mismatched)
+
 
 //Trigger validation for individual fields when their values change
 watch(() => form.value.amount, () => validateField('amount'));
