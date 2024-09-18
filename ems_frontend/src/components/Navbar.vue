@@ -39,6 +39,9 @@
   
   <script setup>
   import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter(); //Initialize router
   
   // Search Query
   const searchQuery = ref('');
@@ -48,15 +51,12 @@
       {
           label: 'Home',
           icon: 'pi pi-home',
-          command: () => { console.log('Home clicked') }
+          command: () => { router.push({ name: 'home' }) } //Navigate to home
       },
       {
         label: 'Transactions',
         icon: 'pi pi-money-bill',
-        items: [
-          { label: 'Add Transaction', icon: 'pi pi-plus' },
-          { label: 'View Transactions', icon: 'pi pi-eye' }
-        ]
+        command: () => { router.push({ name: 'transaction' }) } //Navigate to home
       },
       {
         label: 'Budgets',
@@ -80,7 +80,8 @@
   const itemsSidebar = ref([
     { 
       label: 'Dashboard',
-      icon: 'pi pi-char-line' 
+      icon: 'pi pi-char-line',
+      command: () => { router.push({ name: 'home' }) } 
     },
     { label: 'Manage Transactions', 
       icon: 'pi pi-money-bill', 
