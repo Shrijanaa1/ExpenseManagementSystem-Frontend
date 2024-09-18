@@ -51,32 +51,75 @@
           command: () => { console.log('Home clicked') }
       },
       {
-          label: 'Features',
-          icon: 'pi pi-star',
-          command: () => { console.log('Features clicked') }
+        label: 'Transactions',
+        icon: 'pi pi-money-bill',
+        items: [
+          { label: 'Add Transaction', icon: 'pi pi-plus' },
+          { label: 'View Transactions', icon: 'pi pi-eye' }
+        ]
       },
       {
-          label: 'Projects',
-          icon: 'pi pi-folder',
-          items: [
-              { label: 'Project 1', icon: 'pi pi-file' },
-              { label: 'Project 2', icon: 'pi pi-file' }
-          ]
+        label: 'Budgets',
+        icon: 'pi pi-wallet',
+        items: [
+          { label: 'Add Budget', icon: 'pi pi-plus' },
+          { label: 'View Budgets', icon: 'pi pi-eye' }
+        ]
       },
       {
-          label: 'Contact',
-          icon: 'pi pi-envelope',
-          command: () => { console.log('Contact clicked') },
-          badge: '3'
-      }
+        label: 'Reports',
+        icon: 'pi pi-chart-line',
+        items: [
+          { label: 'Monthly Reports', icon: 'pi pi-calendar' },
+          { label: 'Yearly Reports', icon: 'pi pi-calendar-plus' }
+        ]
+      },
   ]);
   
   //Menu Items for Sidebar Menubar
   const itemsSidebar = ref([
-    { label: 'Dashboard', icon: 'pi pi-char-line' },
-    { label: 'Profile', icon: 'pi pi-user' },
-    { label: 'Settings', icon: 'pi pi-cog' },
-    { label: 'Logout', icon: 'pi pi-sign-out' }
+    { 
+      label: 'Dashboard',
+      icon: 'pi pi-char-line' 
+    },
+    { label: 'Manage Transactions', 
+      icon: 'pi pi-money-bill', 
+      items: [
+          { label: 'Add Transaction', icon: 'pi pi-plus' },
+          { label: 'View Transactions', icon: 'pi pi-eye' }
+        ]
+    },
+    { label: 'Budget Management', 
+      icon: 'pi pi-wallet', 
+      items: [
+          { label: 'Add Budget', icon: 'pi pi-plus' },
+          { label: 'View Budgets', icon: 'pi pi-eye' }
+      ]
+    },
+    {
+      label: 'Reports',
+      icon: 'pi pi-char-line',
+        items: [
+            { label: 'Monthly Reports', icon: 'pi pi-calender' },
+            { label: 'Yearly Reports', icon: 'pi pi-calender-plus' }
+        ]
+    },
+    {
+      label: 'Help & Support',
+      icon: 'pi pi-question-circle',
+        items: [
+            { label: 'FAQ', icon: 'pi pi-question' },
+            { label: 'Contact Support', icon: 'pi pi-envelope' }
+        ]
+    },
+    { 
+      label: 'Settings', 
+      icon: 'pi pi-cog' 
+    },
+    { 
+      label: 'Logout', 
+      icon: 'pi pi-sign-out' 
+    }
   ]);
 
   //Sidebar Visibility State
