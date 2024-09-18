@@ -1,127 +1,177 @@
 <template>
   <div class="form-wrapper">
-    <!-- Vee-Validate Form component -->
-    <Form @submit="submitForm" v-slot="{ errors }" class="form-container">
-      
-      <!-- Amount Field -->
+    <form @submit.prevent="handleSubmit" class="form-container"> <!-- Prevents default form submission(or form reload) and triggers handleSubmit-->
       <div class="p-field">
         <label for="amount" class="labels">Amount</label>
-        <Field name="amount" rules="required|min_value:0.01" v-slot="{ field, errorMessage }">
-          <!-- Using InputNumber in standard mode, without currency formatting -->
-          <InputNumber 
-            id="amount" 
-            v-bind="field" 
-            v-model.number="form.amount"  
-            :min="0.01" 
-            class="input-field" 
-            @input="updateAmount"
-          />
-          <ErrorMessage name="amount" class="error" />
-        </Field>
+        <InputNumber 
+          id="amount" 
+          v-model="form.amount" 
+          mode="currency" 
+          currency="NPR" 
+          class="input-field" 
+        />
+        <div v-if="formErrors.amount" class="error">{{ formErrors.amount }}</div>  <!-- For displaying error message  -->
       </div>
 
-
-      <!-- Type Field -->
       <div class="p-field">
-        <label for="type" class="labels">Type</label>
-        <Field name="type" rules="required" v-slot="{ field, errorMessage }">
-          <Select id="type" v-bind="field" :options="types" optionLabel="label" optionValue="value" v-model="form.type" @change="fetchCategories" class="input-field" />
-          <ErrorMessage name="type" class="error" />
-        </Field>
+        <label for="type" class="labels">Type</label> <!-- It binds form.type and options prop is linked to type array -->
+        <Select 
+          id="type" 
+          :options="types" 
+          optionLabel="label" 
+          optionValue="value" 
+          v-model="form.type" 
+          @change="fetchCategories" 
+          class="input-field" 
+        />
+        <div v-if="formErrors.type" class="error">{{ formErrors.type }}</div>
       </div>
 
-      <!-- Category Field -->
       <div class="p-field">
         <label for="category" class="labels">Category</label>
-        <Field name="category" rules="required" v-slot="{ field, errorMessage }">
-          <Select id="category" v-bind="field" :options="categories" v-model="form.category" class="input-field" />
-          <ErrorMessage name="category" class="error" />
-        </Field>
+        <Select 
+          id="category" 
+          :options="categories" 
+          v-model="form.category" 
+          class="input-field" 
+        />
+        <div v-if="formErrors.category" class="error">{{ formErrors.category }}</div>
       </div>
 
-      <!-- Description Field -->
       <div class="p-field">
         <label for="description" class="labels">Description</label>
-        <Field name="description" rules="required|min:3|no_special_chars" v-slot="{ field, errorMessage }">
-          <InputText id="description" v-bind="field" v-model="form.description" class="input-field" />
-          <ErrorMessage name="description" class="error" />
-        </Field>
+        <InputText 
+          id="description" 
+          v-model="form.description" 
+          class="input-field" 
+        />
+        <div v-if="formErrors.description" class="error">{{ formErrors.description }}</div>
       </div>
 
-      <!-- Buttons -->
       <div class="button-row">
-        <Button label="Save" type="submit" icon="pi pi-save" class="save-button" />
-        <Button label="Cancel" type="button" icon="pi pi-times" class="cancel-button" @click="$emit('close')" />
+        <Button 
+          label="Save" 
+          type="submit" 
+          icon="pi pi-save" 
+          class="save-button" 
+        />
+        <Button 
+          label="Cancel" 
+          type="button" 
+          icon="pi pi-times" 
+          class="cancel-button" 
+          @click="$emit('close')" 
+        />
       </div>
-    </Form>
+    </form>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
-import { Form, Field, ErrorMessage } from 'vee-validate';
-import { required, min, min_value } from '@vee-validate/rules';
-import { defineRule, configure } from 'vee-validate';
+import * as yup from 'yup';
 import transactionService from '@/router/transactionService';
 
-// Registering validation rules
-defineRule('required', required);
-defineRule('min', min);
-defineRule('min_value', min_value);
+const props = defineProps({ transaction: Object }); //Initialize form with default values
+const emit = defineEmits(['save', 'close']);  //Emits custom event to save/close form
 
-//Custom rule for perventing spaces and special characters
-defineRule('no_special_chars', value => {
-  if(!/^[a-zA-Z0-9\s]*$/.test(value)) {
-    return 'Only letters, numbers and spaces are allowed';
-  }
-  if(value.startsWith(' ') || value.endsWith(' ')){
-    return 'No leading or trailing spaces allowed';
-  }
-  return true; //Valid
-})
-
-// Form state
-const props = defineProps({ transaction: Object });
-const emit = defineEmits(['save', 'close']);
-const form = ref({ ...props.transaction });
+const form = ref({ ...props.transaction }); //
 
 const types = [
   { label: 'Income', value: 'INCOME' },
   { label: 'Expense', value: 'EXPENSE' },
 ];
 
-const categories = ref([]);
+const categories = ref([]); //Initially empty, later populated by fetchCategories method based on the selected type
+
+//for holding error messages
+const formErrors = ref({  
+  amount: '',
+  type: '',
+  category: '',
+  description: ''
+});
+
+// Yup schema for defining validation rules
+const schema = yup.object().shape({
+  amount: yup
+    .number()
+    .required('Amount is required')
+    .positive('Amount must be positive'),
+  type: yup
+    .string()
+    .required('Type is required'),
+  category: yup
+    .string()
+    .required('Category is required'),
+  description: yup
+    .string()
+    .min(2, 'Description must be at least 2 characters')
+    // .trim('Description cannot include leading or trailing spaces') //Trim spaces
+    .required('Description is required')
+    .matches(/^[a-zA-Z0-9 ]*$/, 'Description can only contain letters, numbers and spaces') //Custom validation
+    .test(
+      'no-leading-trailing-spaces',
+      'Description cannot include leading or trailing spaces',
+      (value) => value === value.trim()
+    )
+});
 
 const fetchCategories = async () => {
   const response = await transactionService.getCategories(form.value.type);
   categories.value = response.data;
 };
 
-// const submitForm = (values) => {
-//   emit('save', form.value);
-// };
-
-const submitForm = () => {
-  // Parse amount value to float to ensure it's valid
-  form.value.amount = parseFloat(form.value.amount);
-  emit('save', form.value);
-};
-
-//Watcher to updaate form state
+//Watch for changes in the transaction prop and update the form accordingly
 watch(() => props.transaction, (newValue) => {
-  form.value = { ...newValue };
+  form.value = { ...newValue };   //New value copied to form.value
   fetchCategories();
-}, { immediate: true });
+}, { immediate: true }); //so that watcher runs immediately when the component is mounted
 
-// Update amount to ensure a numeric value is always passed
-const updateAmount = (e) => {
-  form.value.amount = parseFloat(e.value);
+
+//Validate a specific field in the form when it changes
+const validateField = async (field) => {
+  try {
+    await schema.validateAt(field, form.value); //validates the specific field in the form.value object against the schema rules defined 
+    formErrors.value[field] = ''; //If validation passes, the error for the field is cleared
+  } catch (err) {
+    formErrors.value[field] = err.message; //If validation fails, display the error in the UI
+  }
 };
 
-//Validate configuratio
-configure({
-  validateOnInput: true,
-});
+//blur event bata garne
+//dpn't use watcher// separate
+
+
+//Trigger validation for individual fields when their values change
+watch(() => form.value.amount, () => validateField('amount'));
+watch(() => form.value.type, () => validateField('type'));
+watch(() => form.value.category, () => validateField('category'));
+watch(() => form.value.description, () => validateField('description'));
+
+//Validate the entire form when the user tries to submit it
+const validateForm = async () => {
+  try {
+    Object.keys(formErrors.value).forEach(key => formErrors.value[key] = ''); //all existing error messages are cleared by setting each key in formErrors.value to an empty string
+    await schema.validate(form.value, { abortEarly: false }); //called to called to validate the entire form object // abortEarly:false option ensures that Yup continues validating all fields, even if one field fails
+    return true; //If validation passes, the function returns true
+  } catch (err) {
+    if (err instanceof yup.ValidationError) {  //If validation fails, Yup throws a ValidationError
+      err.inner.forEach(validationError => {  //err.inner array contains details about all validation errors
+        formErrors.value[validationError.path] = validationError.message;  //each error is mapped to the corresponding form field by updating formErrors.value[validationError.path] with the error message
+      });
+    }
+    return false;
+  }
+};
+
+//Handle form submission by validating the form and emitting a save event if validation passes
+const handleSubmit = async () => {
+  const isValid = await validateForm();
+  if (isValid) {
+    emit('save', form.value);
+  }
+};
 
 </script>
 
@@ -130,7 +180,6 @@ configure({
   background-color: #ffffff;
   padding: 40px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
   max-width: 600px;
   margin: auto;
 }
@@ -166,7 +215,8 @@ configure({
   margin-top: 30px;
 }
 
-.save-button, .cancel-button {
+.save-button,
+.cancel-button {
   padding: 12px 25px;
   font-size: 1rem;
   border-radius: 8px;
@@ -196,7 +246,6 @@ configure({
 
 .error {
   color: red;
-  font-size: 0.875rem;
-  margin-top: 5px;
+  font-size: 0.9rem;
 }
 </style>

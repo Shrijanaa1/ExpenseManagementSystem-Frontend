@@ -1,22 +1,22 @@
 <template>
   <div class="form-wrapper">
     <!-- Vee-Validate Form component -->
-    <Form @submit="submitForm" v-slot="{ errors }" class="form-container">
+    <Form @submit="submitForm" v-slot="{ errors }" class="form-container">  
       
       <!-- Amount Field -->
       <div class="p-field">
         <label for="amount" class="labels">Amount</label>
-        <Field name="amount" rules="required|min_value:0.01" v-slot="{ field, errorMessage }">
+        <Field name="amount" rules="required|min_value:0.01" v-slot="{ field, errorMessage }">  <!-- The slot provides access to field (binding the field input) and errorMessage (displays validation errors for this specific field)-->
+          <!-- Using InputNumber in standard mode, without currency formatting -->
+          <!-- v-bind="field": Dynamically binds all necessary attributes and events for the form field-->
           <InputNumber 
             id="amount" 
             v-bind="field" 
-            :value="form.amount" 
-            mode="currency" 
-            currency="NPR" 
-            @input="(e) => form.amount = parseFloat(e.value)" 
+            v-model.number="form.amount"  
             class="input-field" 
+            @input="updateAmount"
           />
-          <ErrorMessage name="amount" class="error" />
+          <ErrorMessage name="amount" class="error" /> <!-- For displaying error message -->
         </Field>
       </div>
 
@@ -42,7 +42,7 @@
       <!-- Description Field -->
       <div class="p-field">
         <label for="description" class="labels">Description</label>
-        <Field name="description" rules="required|min:3" v-slot="{ field, errorMessage }">
+        <Field name="description" rules="required|min:3|no_special_chars" v-slot="{ field, errorMessage }">
           <InputText id="description" v-bind="field" v-model="form.description" class="input-field" />
           <ErrorMessage name="description" class="error" />
         </Field>
@@ -64,15 +64,26 @@ import { required, min, min_value } from '@vee-validate/rules';
 import { defineRule, configure } from 'vee-validate';
 import transactionService from '@/router/transactionService';
 
-// Registering validation rules
+// Registering validation rules globally
 defineRule('required', required);
 defineRule('min', min);
 defineRule('min_value', min_value);
 
+//Custom rule for perventing spaces and special characters
+defineRule('no_special_chars', value => {
+  if(!/^[a-zA-Z0-9\s]*$/.test(value)) {
+    return 'Only letters, numbers and spaces are allowed';
+  }
+  if(value.startsWith(' ') || value.endsWith(' ')){
+    return 'No leading or trailing spaces allowed';
+  }
+  return true; //Valid
+})
+
 // Form state
 const props = defineProps({ transaction: Object });
 const emit = defineEmits(['save', 'close']);
-const form = ref({ ...props.transaction });
+const form = ref({ ...props.transaction }); //reactive object (ref) that holds the form data. It is initialized with the transaction prop passed into the component.
 
 const types = [
   { label: 'Income', value: 'INCOME' },
@@ -86,18 +97,34 @@ const fetchCategories = async () => {
   categories.value = response.data;
 };
 
-const submitForm = (values) => {
+// const submitForm = (values) => {
+//   emit('save', form.value);
+// };
+
+const submitForm = () => {
+  // Parse amount value to float to ensure it's valid
+  form.value.amount = parseFloat(form.value.amount);
   emit('save', form.value);
 };
 
+//Watcher to updaate form state: Watches the transaction prop. When it changes, the form is updated
 watch(() => props.transaction, (newValue) => {
   form.value = { ...newValue };
   fetchCategories();
 }, { immediate: true });
 
+
+// Update amount to ensure a numeric value is always passed
+//Prevents invalid or non-numeric values
+const updateAmount = (e) => {
+  form.value.amount = parseFloat(e.value);
+};
+
+//Validate configuration to validate fields on every input change
 configure({
   validateOnInput: true,
 });
+
 </script>
 
 <style scoped>

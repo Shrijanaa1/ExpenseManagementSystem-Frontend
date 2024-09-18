@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper">
-    <form @submit.prevent="handleSubmit" class="form-container">
+    <form @submit.prevent="handleSubmit" class="form-container"> <!-- Prevents default form submission(or form reload) and triggers handleSubmit-->
       <div class="p-field">
         <label for="amount" class="labels">Amount</label>
         <InputNumber 
@@ -10,11 +10,11 @@
           currency="NPR" 
           class="input-field" 
         />
-        <div v-if="formErrors.amount" class="error">{{ formErrors.amount }}</div>
+        <div v-if="formErrors.amount" class="error">{{ formErrors.amount }}</div>  <!-- For displaying error message  -->
       </div>
 
       <div class="p-field">
-        <label for="type" class="labels">Type</label>
+        <label for="type" class="labels">Type</label> <!-- It binds form.type and options prop is linked to type array -->
         <Select 
           id="type" 
           :options="types" 
@@ -72,26 +72,27 @@ import { ref, watch } from 'vue';
 import * as yup from 'yup';
 import transactionService from '@/router/transactionService';
 
-const props = defineProps({ transaction: Object });
-const emit = defineEmits(['save', 'close']);
+const props = defineProps({ transaction: Object }); //Initialize form with default values
+const emit = defineEmits(['save', 'close']);  //Emits custom event to save/close form
 
-const form = ref({ ...props.transaction });
+const form = ref({ ...props.transaction }); //
 
 const types = [
   { label: 'Income', value: 'INCOME' },
   { label: 'Expense', value: 'EXPENSE' },
 ];
 
-const categories = ref([]);
+const categories = ref([]); //Initially empty, later populated by fetchCategories method based on the selected type
 
-const formErrors = ref({
+//for holding error messages
+const formErrors = ref({  
   amount: '',
   type: '',
   category: '',
   description: ''
 });
 
-// Yup schema for validation
+// Yup schema for defining validation rules
 const schema = yup.object().shape({
   amount: yup
     .number()
@@ -116,46 +117,53 @@ const fetchCategories = async () => {
   categories.value = response.data;
 };
 
+//Watch for changes in the transaction prop and update the form accordingly
 watch(() => props.transaction, (newValue) => {
-  form.value = { ...newValue };
+  form.value = { ...newValue };   //New value copied to form.value
   fetchCategories();
-}, { immediate: true });
+}, { immediate: true }); //so that watcher runs immediately when the component is mounted
 
+
+//Validate a specific field in the form when it changes
 const validateField = async (field) => {
   try {
-    await schema.validateAt(field, form.value);
-    formErrors.value[field] = '';
+    await schema.validateAt(field, form.value); //validates the specific field in the form.value object against the schema rules defined 
+    formErrors.value[field] = ''; //If validation passes, the error for the field is cleared
   } catch (err) {
-    formErrors.value[field] = err.message;
+    formErrors.value[field] = err.message; //If validation fails, display the error in the UI
   }
 };
 
+//Trigger validation for individual fields when their values change
 watch(() => form.value.amount, () => validateField('amount'));
 watch(() => form.value.type, () => validateField('type'));
 watch(() => form.value.category, () => validateField('category'));
 watch(() => form.value.description, () => validateField('description'));
 
+//Validate the entire form when the user tries to submit it
 const validateForm = async () => {
   try {
-    Object.keys(formErrors.value).forEach(key => formErrors.value[key] = '');
-    await schema.validate(form.value, { abortEarly: false });
-    return true;
+    Object.keys(formErrors.value).forEach(key => formErrors.value[key] = ''); //all existing error messages are cleared by setting each key in formErrors.value to an empty string
+    await schema.validate(form.value, { abortEarly: false }); //called to called to validate the entire form object // abortEarly:false option ensures that Yup continues validating all fields, even if one field fails
+    return true; //If validation passes, the function returns true
   } catch (err) {
-    if (err instanceof yup.ValidationError) {
-      err.inner.forEach(validationError => {
-        formErrors.value[validationError.path] = validationError.message;
+    if (err instanceof yup.ValidationError) {  //If validation fails, Yup throws a ValidationError
+      err.inner.forEach(validationError => {  //err.inner array contains details about all validation errors
+        formErrors.value[validationError.path] = validationError.message;  //each error is mapped to the corresponding form field by updating formErrors.value[validationError.path] with the error message
       });
     }
     return false;
   }
 };
 
+//Handle form submission by validating the form and emitting a save event if validation passes
 const handleSubmit = async () => {
   const isValid = await validateForm();
   if (isValid) {
     emit('save', form.value);
   }
 };
+
 </script>
 
 <style scoped>
