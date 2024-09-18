@@ -1,8 +1,8 @@
 <template>
-    <div class="navbar">
+    <div>
 
       <!-- Top Menubar -->
-       <div class="top-navbar">
+       <div class="navbar">
           <Menubar :model="items">
             <template #start>
 
@@ -103,8 +103,14 @@
   
   <style scoped>
   .navbar {
-    padding: 1rem;
     background-color: var(--navbar-bg-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .logo {
