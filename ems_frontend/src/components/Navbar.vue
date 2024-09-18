@@ -1,6 +1,4 @@
 <template>
-    <div>
-
       <!-- Top Menubar -->
        <div class="navbar">
           <Menubar :model="items">
@@ -29,10 +27,7 @@
 
       <!-- Sidebar Menubar -->
        <div class="sidebar" v-if="sidebarVisible">
-          <Menubar :model="itemsSidebar">
-            <template #start>
-
-            </template>
+          <Menubar :model="itemsSidebar" class="sidebar-menubar">
             <template #end>
               <!-- Close Button for Sidebar -->
                <Button icon="pi pi-times" class="close-sidebar" @click="toggleSidebar"/>
@@ -40,7 +35,6 @@
           </Menubar>
        </div>
 
-    </div>
   </template>
   
   <script setup>
@@ -109,8 +103,8 @@
     background-color: var(--navbar-bg-color);
     position: fixed;
     top: 0;
-    left: 1px;
-    right: 1px;
+    left: 0;
+    right: 0;
     padding: 0;
     height: 50px;
     z-index: 1001;
@@ -143,7 +137,7 @@
   .sidebar{
     position: fixed;
     top: 50px;
-    left: 1px;
+    left: 0px;
     width: 250px;
     height: 100%;
     background-color: var(--sidebar-bg-color);
@@ -156,26 +150,25 @@
     margin: 1rem;
   }
 
-  .sidebar Menubar {
-  height: 100%;
-  padding: 1rem;
-  display: flex;
+/* .sidebar-menubar{
+  display: flex !important;
   flex-direction: column;
-}
+  padding: 1rem;
+} */
 
-.sidebar ul {
-  list-style-type: none;
+.sidebar-menubar .p-menubar{
+  display: block;
   padding: 0;
 }
 
-.sidebar ul li {
-  padding: 1rem;
-  cursor: pointer;
+.sidebar-menubar .p-menubar-item{
+  display: block;
+  padding: 10px 0;
+  margin: 5px 0;
+}
+.p-menubar-item{
+  display: flex !important;
 }
 
-.sidebar ul li:hover {
-  background-color: var(--sidebar-hover-bg-color);
-}
-
-  </style>
+</style>
   
