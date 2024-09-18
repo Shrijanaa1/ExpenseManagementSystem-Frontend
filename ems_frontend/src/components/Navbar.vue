@@ -31,6 +31,9 @@
        <div class="sidebar" v-if="sidebarVisible">
           <Menubar :model="itemsSidebar">
             <template #start>
+
+            </template>
+            <template #end>
               <!-- Close Button for Sidebar -->
                <Button icon="pi pi-times" class="close-sidebar" @click="toggleSidebar"/>
             </template>
@@ -106,9 +109,10 @@
     background-color: var(--navbar-bg-color);
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
+    left: 1px;
+    right: 1px;
     padding: 0;
+    height: 50px;
     z-index: 1001;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -138,8 +142,8 @@
 
   .sidebar{
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50px;
+    left: 1px;
     width: 250px;
     height: 100%;
     background-color: var(--sidebar-bg-color);
