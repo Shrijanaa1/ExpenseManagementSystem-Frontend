@@ -1,10 +1,10 @@
 <template>
       <!-- Top Menubar -->
        <div class="navbar">
-          <Menubar :model="items">
+          <Menubar :model="items">   <!-- :model is a Vue binding to pass data dynamically-->
             <template #start>
 
-              <Button v-if="!sidebarVisible" icon="pi pi-bars" class="hamburger-menu" @click="toggleSidebar"/>
+              <Button v-if="!sidebarVisible" icon="pi pi-bars" class="hamburger-menu" @click="toggleSidebar"/>   <!-- hamburger button will only be shown when the sidebar is not visible -->
               <!-- Logo on the left side -->
               <img src="@/assets/expense1.png" alt="Logo" class="logo"/>
             </template>
@@ -38,13 +38,12 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { ref } from 'vue';   //Creates reactive variable
+  import { useRouter } from 'vue-router';    //for navigation
 
   const router = useRouter(); //Initialize router
   
-  // Search Query
-  const searchQuery = ref('');
+  const searchQuery = ref('');   // Declares a reactive searchQuery variable with an initial value of an empty string.
   
   // Menu Items for Top Navbar
   const items = ref([
@@ -131,13 +130,13 @@
   //   sidebarVisible.value = !sidebarVisible.value;
   // }
 
-  //Props to accept sidebar state and toggle function
+  //Props to accept sidebar state and toggle function, props controlled by parent component(App.vue)
   const props = defineProps ({
     sidebarVisible: Boolean,
     toggleSidebar: Function,
   });
 
-  // Methods to handle theme switching
+  // Methods to handle theme switching, by changing the data-theme attribute of the document's root element
   const setLightTheme = () => {
       document.documentElement.setAttribute('data-theme', 'light');
   };
@@ -200,9 +199,13 @@
     margin: 1rem;
   }
 
-.sidebar-menubar .p-menubar{
-  display: block;
-  padding: 0;
+.sidebar {
+display: flex;
+flex-direction: column;
+}
+
+.sidebar-item {
+margin-bottom: 10px;
 }
 
 .sidebar-menubar .p-menubar-item{
@@ -210,9 +213,12 @@
   padding: 10px 0;
   margin: 5px 0;
 }
-.p-menubar-item{
-  display: flex !important;
+
+.p-menubar-root-list{
+  color: aqua !important;
+  background-color: aquamarine !important;
 }
+
 
 </style>
   

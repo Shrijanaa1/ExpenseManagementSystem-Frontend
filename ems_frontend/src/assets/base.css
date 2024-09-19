@@ -1,6 +1,6 @@
 :root {
-    --navbar-bg-color: #1e1e2f;
-    --text-color: #fff;
+    --navbar-bg-color: #fff;
+    --text-color: #000;
   }
   
   [data-theme='light'] {

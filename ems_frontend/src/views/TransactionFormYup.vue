@@ -10,6 +10,7 @@
             v-model="form.amount" 
             class="input-field" 
             @blur="validateField('amount')"
+            @input="validateField('amount')"
          />
         </div>
         
@@ -139,11 +140,11 @@ const validateField = async (field) => {
   }
 };
 
-//Trigger validation for individual fields when their values change
-watch(() => form.value.amount, () => validateField('amount'));
-watch(() => form.value.type, () => validateField('type'));
-watch(() => form.value.category, () => validateField('category'));
-watch(() => form.value.description, () => validateField('description'));
+// //Trigger validation for individual fields when their values change
+// watch(() => form.value.amount, () => validateField('amount'));
+// watch(() => form.value.type, () => validateField('type'));
+// watch(() => form.value.category, () => validateField('category'));
+// watch(() => form.value.description, () => validateField('description'));
 
 //Validate the entire form when the user tries to submit it
 const validateForm = async () => {
