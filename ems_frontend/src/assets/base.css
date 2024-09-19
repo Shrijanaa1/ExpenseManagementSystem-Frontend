@@ -13,6 +13,20 @@
     --text-color: #fff;
   }
 
+  .navbar .p-menubar-root-list{
+    gap: 10px;
+    /* color: #fff; */
+  }
+
+  .sidebar .p-menubar-root-list {
+    display: block;
+    flex-direction: column;
+  }
+
+.sidebar .p-menubar-item{
+  padding: 10px;
+}
+
   /* Apply text color globally // change only header*/
 /* body {
     color: var(--text-color);

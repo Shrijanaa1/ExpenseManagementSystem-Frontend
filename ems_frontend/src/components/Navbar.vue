@@ -208,17 +208,5 @@ flex-direction: column;
 margin-bottom: 10px;
 }
 
-.sidebar-menubar .p-menubar-item{
-  display: block;
-  padding: 10px 0;
-  margin: 5px 0;
-}
-
-.p-menubar-root-list{
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-
 </style>
   
