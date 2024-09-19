@@ -8,8 +8,8 @@ const apiClient = axios.create({ //defining default settings for all HTTP reques
 });
 
 export default {  //exports an object that contains methods for interacting with the API
-  getAll() {
-    return apiClient.get('');
+  getAll(params) {
+    return apiClient.get('', { params });
   },
   getById(id) {
     return apiClient.get(`/${id}`);

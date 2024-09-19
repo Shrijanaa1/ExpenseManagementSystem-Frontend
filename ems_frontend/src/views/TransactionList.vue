@@ -4,7 +4,18 @@
 
     <Button label="Add Transaction" icon="pi pi-plus" class="add-button" @click="openDialog"/>
 
-    <DataTable :value="transactions" responsiveLayout="scroll">
+    <DataTable 
+    :value="transactions" 
+    :lazy="true"
+    :totalRecords="totalRecords"
+    :loading="loading"
+    :rows="rows"
+    :first="first"
+    :paginator="true"
+    @page="onPage"
+    responsiveLayout="scroll"
+    >
+
       <Column field="id" header="ID"></Column>
       <Column field="amount" header="Amount"></Column>
       <Column field="type" header="Type"></Column>
@@ -25,11 +36,6 @@
       :closable="true"
     >
 
-    <!-- To change default header of give custom view -->
-    <!-- <template #header> 
-      Test
-    </template> -->
-
       <TransactionForm v-if="selectedTransaction" :transaction="selectedTransaction" @save="saveTransaction" @close="closeDialog"/>
     </Dialog>
 
@@ -40,22 +46,51 @@
 import { ref, onMounted} from 'vue'; //ref: reactive references // onMounted: lifecycle hook that runs when component is mounted
 import transactionService from '../router/transactionService';  //handles API requests to manage transaction
 import TransactionForm from './TransactionForm.vue';
-// import { Form, Field, ErrorMessage, useForm } from 'vee-validate';
 
 const transactions = ref([]);   //Holds list of transactions, initially an empty array
 const selectedTransaction = ref(null);  //Stores transaction being edited/added. If null means no transaction selected
 const dialogVisible = ref(false); //controls visibility of dialog
 const errorMessage = ref(null);  // New state for errors
 
-// Load transactions initially
-const loadTransactions = async () => { //method called when component is mounted
+
+const totalRecords = ref(0); //Track total number of records
+const loading = ref(false); //To track loading state
+const first = ref(0);
+const rows = ref(10);
+
+// // Load transactions initially
+// const loadTransactions = async () => { //method called when component is mounted
+//   try {
+//     const response = await transactionService.getAll(); //makes API call to fetch all transactions and populate transactions array with response data
+//     transactions.value = response.data;
+//   } catch (error) {
+//     console.error('Error loading transactions:', error);
+//     errorMessage.value = 'Failed to load transactions. Please try again later.';
+//   }
+// };
+
+
+//Load transactions lazily with pagination
+const loadTransactions = async (page = 0, size = 10) => { //method called when component is mounted
+  loading.value = true;
   try {
-    const response = await transactionService.getAll(); //makes API call to fetch all transactions and populate transactions array with response data
-    transactions.value = response.data;
+    const response = await transactionService.getAll({ page, size });
+    transactions.value = response.data.content; //Pagination content
+    totalRecords.value = response.data.totalElements; //Total records for paginaiton
   } catch (error) {
     console.error('Error loading transactions:', error);
     errorMessage.value = 'Failed to load transactions. Please try again later.';
   }
+  finally{
+    loading.value = false;
+  }
+};
+
+const onPage = (event) => {
+  first.value = event.first;
+  rows.value = event.rows;
+  const currentPage = first.value / rows.value;
+  loadTransactions(currentPage, rows.value);
 };
 
 // Open dialog for new transaction

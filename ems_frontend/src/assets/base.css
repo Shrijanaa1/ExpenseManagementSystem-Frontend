@@ -16,18 +16,19 @@
 
   .navbar .p-menubar-root-list{
     gap: 10px;
+    font-size: 17px;
     /* color: #fff; */
   }
 
   .sidebar .p-menubar-root-list {
     display: block;
     flex-direction: column;
+    font-size: 17px;
   }
 
 .sidebar .p-menubar-item{
   padding: 5px;
 }
-
 
 
   /* Apply text color globally // change only header*/
