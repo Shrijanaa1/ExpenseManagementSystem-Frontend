@@ -12,6 +12,9 @@
     :rows="rows"
     :first="first"
     :paginator="true"
+    :rowsPerPageOptions="[5,10,20,50]"
+    paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+    currentPageReportTemplate="{first} to {last} of {totalRecords}"
     @page="onPage"
     responsiveLayout="scroll"
     >
@@ -157,6 +160,5 @@ margin-bottom: 15px;
   font-size: 20px !important;
   font-weight: bold !important;
 }
-
 
 </style>
