@@ -30,7 +30,7 @@
       Test
     </template> -->
 
-      <TransactionForm :transaction="selectedTransaction" @save="saveTransaction" @close="closeDialog"/>
+      <TransactionForm v-if="selectedTransaction" :transaction="selectedTransaction" @save="saveTransaction" @close="closeDialog"/>
     </Dialog>
 
   </div>
@@ -40,6 +40,7 @@
 import { ref, onMounted} from 'vue'; //ref: reactive references // onMounted: lifecycle hook that runs when component is mounted
 import transactionService from '../router/transactionService';  //handles API requests to manage transaction
 import TransactionForm from './TransactionForm.vue';
+// import { Form, Field, ErrorMessage, useForm } from 'vee-validate';
 
 const transactions = ref([]);   //Holds list of transactions, initially an empty array
 const selectedTransaction = ref(null);  //Stores transaction being edited/added. If null means no transaction selected
@@ -70,8 +71,8 @@ const closeDialog = () => {
 
 // Edit transaction
 const editTransaction = (transaction) => {
-  selectedTransaction.value = { ...transaction };
-  dialogVisible.value = true;
+  selectedTransaction.value = { ...transaction }; //Assign the transaction to the selectedTransaction
+  dialogVisible.value = true; //Open the dialog
 };
 
 //save transaction and reload list

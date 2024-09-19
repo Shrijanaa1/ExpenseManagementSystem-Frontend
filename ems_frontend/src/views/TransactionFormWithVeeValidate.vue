@@ -73,11 +73,8 @@ defineRule('min_value', min_value);
 
 //Custom rule for perventing spaces and special characters
 defineRule('no_special_chars', value => {
-  if(!/^[a-zA-Z0-9\s]*$/.test(value)) {
-    return 'Only letters, numbers and spaces are allowed';
-  }
-  if(value.startsWith(' ') || value.endsWith(' ')){
-    return 'No leading or trailing spaces allowed';
+  if(!/^[a-zA-Z0-9]+(\s[a-zA-Z0-9]+)*$/.test(value)) {
+    return 'Only letters, numbers and spaces are allowed, with no leading or trailing spaces';
   }
   return true; //Valid
 })

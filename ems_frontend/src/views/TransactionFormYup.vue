@@ -9,8 +9,8 @@
             id="amount" 
             v-model="form.amount" 
             class="input-field" 
-            @blur="validateField('amount')"
-            @input="validateField('amount')"
+            @blur="debouncedValidateField('amount')" 
+            @input="debouncedValidateField('amount')" 
          />
         </div>
         
@@ -78,6 +78,12 @@
 import { ref, watch } from 'vue';
 import * as yup from 'yup';
 import transactionService from '@/router/transactionService';
+
+import { debounce } from 'lodash'; 
+
+// Wrap the validateField function with debounce
+const debouncedValidateField = debounce((field) => validateField(field), 300);
+
 
 const props = defineProps({ transaction: Object }); //Initialize form with default values
 const emit = defineEmits(['save', 'close']);  //Emits custom event to save/close form

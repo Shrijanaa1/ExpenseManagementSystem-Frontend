@@ -215,8 +215,8 @@ margin-bottom: 10px;
 }
 
 .p-menubar-root-list{
-  color: aqua !important;
-  background-color: aquamarine !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 
