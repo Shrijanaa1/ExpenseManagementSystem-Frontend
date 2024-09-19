@@ -1,5 +1,6 @@
 :root {
     --navbar-bg-color: #fff;
+    --sidebar-bg-color: #f8f9fa;
     --text-color: #000;
   }
   
@@ -24,8 +25,10 @@
   }
 
 .sidebar .p-menubar-item{
-  padding: 10px;
+  padding: 5px;
 }
+
+
 
   /* Apply text color globally // change only header*/
 /* body {

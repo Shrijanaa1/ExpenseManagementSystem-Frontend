@@ -7,9 +7,6 @@
 </template>
 
 <script setup>
-// import { ref } from 'vue';
-// import Navbar from '@/components/Navbar.vue';
-
 import { defineProps } from 'vue';
 
 //Receive the sidebarVisible prop from the parent component(App.vue)
@@ -17,8 +14,6 @@ const props = defineProps({
     sidebarVisible: Boolean,
 });
 
-//track sidebar visibility
-// const sidebarVisible = ref(false);
 
 </script>
 

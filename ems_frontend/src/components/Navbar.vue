@@ -27,12 +27,9 @@
 
       <!-- Sidebar Menubar -->
        <div class="sidebar" v-if="sidebarVisible">
-          <Menubar :model="itemsSidebar" class="sidebar-menubar">
-            <template #end>
-              <!-- Close Button for Sidebar -->
-               <Button icon="pi pi-times" class="close-sidebar" @click="toggleSidebar"/>
-            </template>
-          </Menubar>
+        <!-- Close Button for Sidebar -->
+        <Button icon="pi pi-times" class="close-sidebar" @click="toggleSidebar"/>  
+        <Menubar :model="itemsSidebar" class="sidebar-menubar" />
        </div>
 
   </template>
@@ -171,6 +168,7 @@
 
   .nav-search {
     margin-right: 1rem;
+    padding-bottom: 0;
   }
   
   .theme-icon {
@@ -195,18 +193,13 @@
     transition: transform 0.3s ease;
   }
 
-  .close-sidebar{
-    margin: 1rem;
+ 
+
+  .p-inputtext{
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 3px;
   }
-
-.sidebar {
-display: flex;
-flex-direction: column;
-}
-
-.sidebar-item {
-margin-bottom: 10px;
-}
 
 </style>
   
