@@ -18,6 +18,7 @@ import Ripple from 'primevue/ripple'
 
 import 'primeicons/primeicons.css';
 import './assets/base.css';
+import 'primeflex/primeflex.css';
    
 const app = createApp(App)
 

@@ -5,25 +5,39 @@
     <Button label="Add Transaction" icon="pi pi-plus" class="add-button" @click="openDialog"/>
 
     <DataTable 
-    :value="transactions" 
-    :lazy="true"
-    :totalRecords="totalRecords"
-    :loading="loading"
-    :rows="rows"
-    :first="first"
-    :paginator="true"
-    :rowsPerPageOptions="[5,10,20,50]"
-    paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-    currentPageReportTemplate="{first} to {last} of {totalRecords}"
-    @page="onPage"
-    responsiveLayout="scroll"
+      :value="transactions" 
+      :lazy="true"
+      :totalRecords="totalRecords"
+      :loading="loading"
+      :rows="rows"
+      :first="first"
+      :paginator="true"
+      :rowsPerPageOptions="[5,10,20,50]"
+      paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+      currentPageReportTemplate="{first} to {last} of {totalRecords}"
+      @page="onPage"
+      responsiveLayout="scroll"
+      v-model:filters="filters"
+      filterDisplay="row"
     >
 
-      <Column field="id" header="ID"></Column>
+    <Column field="id" header="ID" :filter="true">
+      <template #filter="{ filterModel, filterCallback }">
+          <InputText v-model="filterModel.value" @input="() => { filterCallback(); loadTransactions(); }" placeholder="Search by ID"/>
+      </template>
+    </Column>
+
+
       <Column field="amount" header="Amount"></Column>
       <Column field="type" header="Type"></Column>
       <Column field="category" header="Category"></Column>
-      <Column field="description" header="Description"></Column>
+
+      <Column field="description" header="Description" :filter="true">
+        <template #filter="{ filterModel, filterCallback }">
+            <InputText v-model="filterModel.value" @input=" () => { filterCallback(); loadTransactions(); }" placeholder="Search by Description"/>
+        </template>
+      </Column>
+
       <Column header="Actions">
         <template #body="slotProps">  <!-- #body directive allows to pass specific row's data to the button -->
           <Button label="Edit" icon="pi pi-pencil" class="p-button-sm edit-button" @click="editTransaction(slotProps.data)"/>
@@ -49,6 +63,7 @@
 import { ref, onMounted} from 'vue'; //ref: reactive references // onMounted: lifecycle hook that runs when component is mounted
 import transactionService from '../router/transactionService';  //handles API requests to manage transaction
 import TransactionForm from './TransactionForm.vue';
+import { FilterMatchMode } from '@primevue/core/api';
 
 const transactions = ref([]);   //Holds list of transactions, initially an empty array
 const selectedTransaction = ref(null);  //Stores transaction being edited/added. If null means no transaction selected
@@ -73,11 +88,22 @@ const rows = ref(10);
 // };
 
 
+const filters = ref({
+  id: { value: null, matchMode: FilterMatchMode.EQUALS },  // Filter for ID field
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },  // Filter for Description field
+});
+
 //Load transactions lazily with pagination
 const loadTransactions = async (page = 0, size = 10) => { //method called when component is mounted
   loading.value = true;
   try {
-    const response = await transactionService.getAll({ page, size });
+    const response = await transactionService.getAll({ 
+      page, 
+      size,
+      sortBy: 'id',
+      id: filters.value.id.value,
+      description: filters.value.description.value
+    });
     transactions.value = response.data.content; //Pagination content
     totalRecords.value = response.data.totalElements; //Total records for paginaiton
   } catch (error) {

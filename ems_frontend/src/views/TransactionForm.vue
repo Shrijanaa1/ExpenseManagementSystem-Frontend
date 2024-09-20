@@ -9,8 +9,7 @@
             id="amount" 
             v-model="form.amount" 
             class="input-field" 
-            @blur="debouncedValidateField('amount')" 
-            @input="debouncedValidateField('amount')" 
+            @blur="debouncedValidateField('amount')"  
          />
         </div>
         
@@ -75,14 +74,14 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';    //ref:updates UI dynamically wehn value changes
 import * as yup from 'yup';
 import transactionService from '@/router/transactionService';
 
 import { debounce } from 'lodash'; 
 
 // Wrap the validateField function with debounce
-const debouncedValidateField = debounce((field) => validateField(field), 300);
+const debouncedValidateField = debounce((field) => validateField(field), 200);
 
 
 const props = defineProps({ transaction: Object }); //Initialize form with default values
