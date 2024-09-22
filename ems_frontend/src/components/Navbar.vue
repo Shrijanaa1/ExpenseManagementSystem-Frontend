@@ -192,7 +192,7 @@ const setDarkTheme = () => {
 }
 
 .p-inputtext{
-  border: 1px solid black;
+  border: 1px solid var(--menu-text-color);
   border-radius: 4px;
   padding: 3px;
   color: var(--menu-text-color); /* Dynamically set the text color based on theme */

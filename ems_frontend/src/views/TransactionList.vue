@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="transactionList-container">
+    <div :class="['transactionList-content', { 'sidebar-open': sidebarVisible }]">
+
     <h2>Transaction List</h2>
 
     <Button label="Add Transaction" icon="pi pi-plus" class="add-button" @click="openDialog"/>
@@ -61,13 +63,20 @@
     </Dialog>
 
   </div>
+  </div>
 </template>
 
 <script setup>
+import { defineProps } from 'vue';
 import { ref, onMounted} from 'vue'; //ref: reactive references // onMounted: lifecycle hook that runs when component is mounted
 import transactionService from '../router/transactionService';  //handles API requests to manage transaction
 import TransactionForm from './TransactionForm.vue';
 import { FilterMatchMode } from '@primevue/core/api';
+
+//Receive the sidebarVisible prop from the parent component(App.vue)
+const props = defineProps({
+    sidebarVisible: Boolean,
+});
 
 const transactions = ref([]);   //Holds list of transactions, initially an empty array
 const selectedTransaction = ref(null);  //Stores transaction being edited/added. If null means no transaction selected
@@ -187,6 +196,21 @@ margin-bottom: 15px;
 .p-dialog-title{
   font-size: 20px !important;
   font-weight: bold !important;
+}
+
+.-container {
+  display: flex;
+}
+
+.transactionList-content {
+  padding-right: 1rem;
+  flex-grow: 1; /* Allow the content to grow and fill the remaining space */
+  width: 100%;
+  transition: margin-left 0.3s ease;
+}
+
+.transactionList-content.sidebar-open {
+  margin-left: 250px; /* Adjust this to the sidebar width */
 }
 
 </style>
