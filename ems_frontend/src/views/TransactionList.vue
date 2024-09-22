@@ -4,7 +4,9 @@
 
     <h2>Transaction List</h2>
 
-    <Button label="Add Transaction" icon="pi pi-plus" class="add-button" @click="openDialog"/>
+    <div class="add-transaction-container">
+        <Button icon="pi pi-plus" class="add-button" @click="openDialog"/>
+    </div>
 
     <DataTable 
       :value="transactions" 
@@ -46,8 +48,8 @@
 
       <Column header="Actions">
         <template #body="slotProps">  <!-- #body directive allows to pass specific row's data to the button -->
-          <Button label="Edit" icon="pi pi-pencil" class="p-button-sm edit-button" @click="editTransaction(slotProps.data)"/>
-          <Button label="Delete" icon="pi pi-trash" class="p-button-sm p-button-danger" @click="deleteTransaction(slotProps.data.id)"/>
+          <Button  icon="pi pi-pencil" class="edit-button" @click="editTransaction(slotProps.data)"/>
+          <Button  icon="pi pi-trash" class="delete-button" @click="deleteTransaction(slotProps.data.id)"/>
         </template>
       </Column>
     </DataTable>
@@ -212,5 +214,30 @@ margin-bottom: 15px;
 .transactionList-content.sidebar-open {
   margin-left: 250px; /* Adjust this to the sidebar width */
 }
+
+.delete-button .pi{
+  color: red;
+  margin-right: 2px;
+  margin-left: 5px;
+}
+
+.edit-button .pi {
+ color: goldenrod;
+ margin-right: 2px;
+ margin-left: 5px;
+}
+
+
+/* CSS for Add Transaction button on the right side */
+.add-transaction-container {
+  display: flex;
+  justify-content: flex-end; /* Move the button to the right */
+  margin-bottom: 5px; /* Space from the table */
+}
+
+.add-button .pi { 
+  color: green;
+}
+
 
 </style>
