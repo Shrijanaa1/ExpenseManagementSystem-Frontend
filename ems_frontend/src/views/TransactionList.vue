@@ -19,11 +19,15 @@
       responsiveLayout="scroll"
       v-model:filters="filters"
       filterDisplay="row"
+      showGridlines
     >
+
+    <template #empty> No transactions found. </template>
+    <template #loading> Loading transaction data. Please wait. </template>
 
     <Column field="id" header="ID" :filter="true">
       <template #filter="{ filterModel, filterCallback }">
-          <InputText v-model="filterModel.value" @input="() => { filterCallback(); loadTransactions(); }" placeholder="Search by ID"/>
+          <InputText v-model="filterModel.value" @input="() => { filterCallback(); onFilterChange(); }" placeholder="Search by ID"/>
       </template>
     </Column>
 
@@ -34,7 +38,7 @@
 
       <Column field="description" header="Description" :filter="true">
         <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input=" () => { filterCallback(); loadTransactions(); }" placeholder="Search by Description"/>
+            <InputText v-model="filterModel.value" @input=" () => { filterCallback(); onFilterChange(); }" placeholder="Search by Description"/>
         </template>
       </Column>
 
@@ -76,17 +80,6 @@ const loading = ref(false); //To track loading state
 const first = ref(0);
 const rows = ref(10);
 
-// // Load transactions initially
-// const loadTransactions = async () => { //method called when component is mounted
-//   try {
-//     const response = await transactionService.getAll(); //makes API call to fetch all transactions and populate transactions array with response data
-//     transactions.value = response.data;
-//   } catch (error) {
-//     console.error('Error loading transactions:', error);
-//     errorMessage.value = 'Failed to load transactions. Please try again later.';
-//   }
-// };
-
 
 const filters = ref({
   id: { value: null, matchMode: FilterMatchMode.EQUALS },  // Filter for ID field
@@ -101,8 +94,8 @@ const loadTransactions = async (page = 0, size = 10) => { //method called when c
       page, 
       size,
       sortBy: 'id',
-      id: filters.value.id.value,
-      description: filters.value.description.value
+      id: filters.value.id.value || null,  //Pass null if filter is not applied
+      description: filters.value.description.value || null
     });
     transactions.value = response.data.content; //Pagination content
     totalRecords.value = response.data.totalElements; //Total records for paginaiton
@@ -121,6 +114,14 @@ const onPage = (event) => {
   const currentPage = first.value / rows.value;
   loadTransactions(currentPage, rows.value);
 };
+
+
+//Reset pagination when filters are applied
+const onFilterChange = () => {
+  first.value = 0; //Reset to first page when filter changes
+  loadTransactions();
+}
+
 
 // Open dialog for new transaction
 const openDialog = () => {
@@ -167,6 +168,7 @@ const deleteTransaction = async (id) => {
 };
 
 onMounted(loadTransactions);  //this lifecycle hook calls loadTransactions when the component is first mounted, ensuring that the list of transactions is fetched as soon as the component renders
+
 </script>
 
 <style >

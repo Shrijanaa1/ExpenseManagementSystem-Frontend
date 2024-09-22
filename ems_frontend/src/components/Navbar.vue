@@ -29,7 +29,7 @@
    <div class="sidebar" v-if="sidebarVisible">
     <!-- Close Button for Sidebar -->
     <Button icon="pi pi-times" class="close-sidebar" @click="toggleSidebar"/>  
-    <Menubar :model="itemsSidebar" class="sidebar-menubar" />
+    <PanelMenu :model="itemsSidebar" class="sidebar-menubar" />
    </div>
 
 </template>
@@ -76,7 +76,7 @@ const items = ref([
 const itemsSidebar = ref([
 { 
   label: 'Dashboard',
-  icon: 'pi pi-char-line',
+  icon: 'pi pi-home',
   command: () => { router.push({ name: 'home' }) } 
 },
 { label: 'Manage Transactions', 
@@ -119,13 +119,6 @@ const itemsSidebar = ref([
 }
 ]);
 
-// //Sidebar Visibility State
-// const sidebarVisible = ref(false);
-
-// //Toggle Sidebar
-// const toggleSidebar = () => {
-//   sidebarVisible.value = !sidebarVisible.value;
-// }
 
 //Props to accept sidebar state and toggle function, props controlled by parent component(App.vue)
 const props = defineProps ({
@@ -146,57 +139,63 @@ const setDarkTheme = () => {
 
 <style scoped>
 .navbar {
-background-color: var(--navbar-bg-color);
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-padding: 0;
-height: 50px;
-z-index: 1001;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--navbar-bg-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+  height: 50px;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-width: 40px;
-margin-right: 1rem;
+  width: 40px;
+  margin-right: 1rem;
 }
 
 .hamburger-menu{
-margin-right: 1rem;
+  margin-right: 1rem;
+  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
 .nav-search {
-margin-right: 1rem;
-padding-bottom: 0;
+  margin-right: 1rem;
 }
 
 .theme-icon {
-margin-right: 1rem;
+  margin-right: 1rem;
+  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
 .profile-icon {
-width: 40px;
-border-radius: 50%;
-margin-left: 1rem;
+  width: 40px;
+  border-radius: 50%;
+  margin-left: 1rem;
 }
 
 .sidebar{
-position: fixed;
-top: 50px;
-left: 0px;
-width: 250px;
-height: 100%;
-background-color: var(--sidebar-bg-color);
-z-index: 1000;
-box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-transition: transform 0.3s ease;
+  position: fixed;
+  top: 50px;
+  left: 0px;
+  width: 250px;
+  height: 100%;
+  background-color: var(--sidebar-bg-color);
+  z-index: 1000;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.close-sidebar{
+  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
 .p-inputtext{
-border: 1px solid black;
-border-radius: 4px;
-padding: 3px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 3px;
+  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
 </style>

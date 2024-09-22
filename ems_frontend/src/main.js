@@ -15,6 +15,7 @@ import Menubar from 'primevue/menubar';
 import Avatar from 'primevue/avatar';
 import Badge from 'primevue/badge';
 import Ripple from 'primevue/ripple'
+import PanelMenu from 'primevue/panelmenu'
 
 import 'primeicons/primeicons.css';
 import './assets/base.css';
@@ -37,6 +38,7 @@ app.component('Menubar', Menubar)
 app.component('Avatar', Avatar)
 app.component('Badge',Badge)
 app.component('Ripple', Ripple)
+app.component('PanelMenu', PanelMenu)
 
 
 app.mount('#app')
