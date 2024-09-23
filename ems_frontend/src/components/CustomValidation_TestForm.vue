@@ -97,16 +97,16 @@ const fetchCategories = async () => {
 const validateField = (field) => {
   switch (field) {
     case 'amount':
-      formErrors.value.amount = validateRequired(form.value.amount) || validateNumber(form.value.amount);
+      formErrors.value.amount = validateRequired(form.value.amount, 'Amount') || validateNumber(form.value.amount, 'Amount');
       break;
     case 'type':
-      formErrors.value.type = validateRequired(form.value.type);
+      formErrors.value.type = validateRequired(form.value.type, 'Type');
       break;
     case 'category':
-      formErrors.value.category = validateRequired(form.value.category);
+      formErrors.value.category = validateRequired(form.value.category, 'Category');
       break;
     case 'description':
-      formErrors.value.description = validateRequired(form.value.description) || validateMinLength(form.value.description, 2);
+      formErrors.value.description = validateRequired(form.value.description, 'Description') || validateMinLength(form.value.description, 2, 'Description');
       break;
     default:
       break;
