@@ -29,7 +29,7 @@
     <template #empty> No transactions found. </template>
     <template #loading> Loading transaction data. Please wait. </template>
 
-    <Column field="id" header="ID" :filter="true">
+    <Column field="id" header="ID" :filter="true" :showFilterMenu="false">
       <template #filter="{ filterModel, filterCallback }">
           <InputText v-model="filterModel.value" @input="() => { filterCallback(); onFilterChange(); }" placeholder="Search by ID"/>
       </template>
