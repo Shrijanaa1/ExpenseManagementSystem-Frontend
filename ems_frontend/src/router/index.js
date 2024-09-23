@@ -4,6 +4,7 @@ import TransactionFormWithVeeValidate from '@/views/TransactionFormWithVeeValida
 import Navbar from '@/components/Navbar.vue'
 import Home from '@/components/Home.vue'
 import Transaction from '@/components/Transaction.vue'
+import TestForm from '@/components/CustomValidation_TestForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/transaction',
       name: 'transaction',
       component: Transaction
+    },
+    {
+      path: '/testForm',
+      name: 'testForm',
+      component: TestForm
     }
   ]
 })

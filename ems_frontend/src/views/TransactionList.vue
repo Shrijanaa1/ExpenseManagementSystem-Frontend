@@ -122,7 +122,7 @@ const loadTransactions = async (page = 0, size = 10) => { //method called when c
 const onPage = (event) => {
   first.value = event.first;
   rows.value = event.rows;
-  const currentPage = first.value / rows.value;
+  const currentPage = first.value / rows.value; 
   loadTransactions(currentPage, rows.value);
 };
 

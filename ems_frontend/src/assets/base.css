@@ -1,5 +1,5 @@
 :root {
-    --navbar-bg-color: #fff;
+    --navbar-bg-color: #fff; /* Custom property for the navbar background color */
     --sidebar-bg-color: #f8f9fa;
     --menu-text-color-light: #000;
     --menu-text-color-dark: #fff;
