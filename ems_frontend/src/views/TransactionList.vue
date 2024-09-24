@@ -39,7 +39,7 @@
 
         <Column field="description" header="Description" :filter="true">
           <template #filter="{ filterModel, filterCallback }">
-              <InputText v-model="filterModel.value" @input="() => { filterCallback(); }" placeholder="Search by ID" />
+              <InputText v-model="filterModel.value" @input="() => { filterCallback(); }" placeholder="Search by Description" />
           </template>
         </Column>
 

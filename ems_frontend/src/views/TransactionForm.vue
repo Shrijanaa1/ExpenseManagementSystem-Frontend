@@ -59,13 +59,13 @@
           label="Save" 
           type="submit" 
           icon="pi pi-save" 
-          class="save-button" 
+          class="p-button-success" 
         />
         <Button 
           label="Cancel" 
           type="button" 
           icon="pi pi-times" 
-          class="cancel-button" 
+          class="p-button-danger" 
           @click="$emit('close')" 
         />
       </div>
@@ -167,18 +167,11 @@ const handleSubmit = async () => {
 
 <style scoped>
 .form-wrapper {
-  background-color: #ffffff;
-  padding: 40px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  margin: auto;
+  padding: 10px;
 }
 
 .labels {
   font-weight: bold;
-  display: inline-block;
-  margin-bottom: 5px;
-  color: #4a4a4a;
 }
 
 .amount-wrapper{
@@ -189,64 +182,21 @@ const handleSubmit = async () => {
 .currency-label{
   margin-right: 3px;
   font-weight: bold;
-  color: #4a4a4a;
 }
 
 .input-field {
-  background-color: #f1f1f1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
   width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 15px;
-  transition: all 0.3s;
-}
-
-.input-field:focus {
-  border-color: #007ad9;
-  background-color: #e8f0fe;
+  margin-bottom: 10px;
 }
 
 .button-row {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-top: 30px;
-}
-
-.save-button,
-.cancel-button {
-  padding: 12px 25px;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: none;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.save-button {
-  background-color: #007ad9;
-  color: white;
-}
-
-.cancel-button {
-  background-color: #ff4d4f;
-  color: white;
-}
-
-.save-button:hover {
-  background-color: #005ea7;
-  transform: translateY(-2px);
-}
-
-.cancel-button:hover {
-  background-color: #d43f3a;
-  transform: translateY(-2px);
+  margin-top: 20px;
 }
 
 .error {
   color: red;
-  font-size: 0.9rem;
 }
 </style>
