@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar.vue'
 import Home from '@/components/Home.vue'
 import Transaction from '@/components/Transaction.vue'
 import TestForm from '@/components/CustomValidation_TestForm.vue'
-import TestList from '@/views/TestList.vue'
 
 
 const router = createRouter({
@@ -40,11 +39,6 @@ const router = createRouter({
       path: '/testForm',
       name: 'testForm',
       component: TestForm
-    },
-    {
-      path: '/testList',
-      name: 'testList',
-      component: TestList
     },
   ]
 })
