@@ -175,10 +175,10 @@ const setDarkTheme = () => {
 
 .sidebar{
   position: fixed;
-  top: 50px;
+  top: 72px;
   left: 0px;
   width: 250px;
-  height: 100%;
+  
   background-color: var(--sidebar-bg-color);
   z-index: 1000;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);

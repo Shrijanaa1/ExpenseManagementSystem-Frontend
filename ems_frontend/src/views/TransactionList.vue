@@ -50,7 +50,7 @@
       <Column header="Actions">
         <template #body="slotProps">  <!-- #body directive allows to pass specific row's data to the button -->
           <Button  icon="pi pi-pencil" class="edit-button" @click="editTransaction(slotProps.data)"/>
-          <Button  icon="pi pi-trash" class="delete-button" @click="deleteTransaction(slotProps.data.id)"/>
+          <Button  icon="pi pi-trash"  @click="deleteTransaction(slotProps.data.id)"/>
         </template>
       </Column>
     </DataTable>
@@ -193,22 +193,6 @@ onMounted(loadTransactions);  //this lifecycle hook calls loadTransactions when 
 </script>
 
 <style >
-.edit-button{
-  padding: 5px;
-}
-
-.add-button{
-margin-bottom: 15px;
-}
-
-.p-dialog-header	{
-  background-color: gainsboro !important;
-}
-
-.p-dialog-title{
-  font-size: 20px !important;
-  font-weight: bold !important;
-}
 
 .-container {
   display: flex;
@@ -225,32 +209,15 @@ margin-bottom: 15px;
   margin-left: 250px; /* Adjust this to the sidebar width */
 }
 
-.delete-button .pi{
-  color: red;
-  margin-right: 2px;
-  margin-left: 5px;
+.p-button{
+  margin-right: 5px;
 }
-
-.edit-button .pi {
- color: goldenrod;
- margin-right: 2px;
- margin-left: 5px;
-}
-
 
 /* CSS for Add Transaction button on the right side */
 .add-transaction-container {
   display: flex;
   justify-content: flex-end; /* Move the button to the right */
-  margin-bottom: 5px; /* Space from the table */
+  margin-bottom: 15px; /* Space from the table */
 }
-
-.add-button .pi { 
-  color: green;
-}
-
-/* .p-inputtext{
-  border: 1px solid black !important;
-} */
 
 </style>
