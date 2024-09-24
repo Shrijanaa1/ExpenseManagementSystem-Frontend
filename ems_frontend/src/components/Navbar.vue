@@ -176,7 +176,8 @@ const setDarkTheme = () => {
   top: 72px;
   left: 0px;
   width: 250px;
-  /* background-color: var(--sidebar-bg-color); */
+  height: 100%;
+  background-color: var(--sidebar-bg-color);
   z-index: 1000;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }

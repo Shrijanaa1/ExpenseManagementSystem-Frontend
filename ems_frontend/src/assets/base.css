@@ -1,39 +1,71 @@
 :root {
     --navbar-bg-color: #fff; /* Custom property for the navbar background color */
-    --sidebar-bg-color: #f8f9fa;
-    --menu-text-color-light: #000;
-    --menu-text-color-dark: #fff;
-    --body-bg-color-light: #ffffff;
-    --body-bg-color-dark: #222222;
-    --body-text-color-light: #000;
-    --body-text-color-dark: #fff;
+    --sidebar-bg-color: #fff;
+    --body-bg-color: #ffffff;
+    --body-text-color: #000;
+    --inputtext-bg-color: #fff;
+    --inputtext-color: #000;
+    --menubar-item-color:#000;
+    --menubar-item-bg-color:#fff;
+    --panemenu-item-color:#000;
+    --panelmenu-item-bg-color:#fff;
   }
   
   [data-theme='light'] {
     --navbar-bg-color: #fff;
-    --sidebar-bg-color: #f8f9fa;
-    --menu-text-color: var(--menu-text-color-light); /* Use light text color */
-    --body-bg-color: var(--body-bg-color-light);
-    --body-text-color: var(--body-text-color-light);
+    --sidebar-bg-color: #fff;
+    --body-bg-color: #fff;
+    --body-text-color: #000;
+    --inputtext-bg-color: #fff;
+    --inputtext-color: #000;
+    --menubar-item-color:#000;
+    --menubar-item-bg-color:#fff;
+    --panemenu-item-color:#000;
+    --panelmenu-item-bg-color:#fff;
   }
   
   [data-theme='dark'] {
-    --navbar-bg-color: #1a1a1a;
-    --sidebar-bg-color: #1a1a1a;
-    --menu-text-color: var(--menu-text-color-dark); /* Use dark text color */
-    --body-bg-color: var(--body-bg-color-dark);
-    --body-text-color: var(--body-text-color-dark);
+    --navbar-bg-color: #000;
+    --sidebar-bg-color: #000;
+    --body-bg-color: #000;
+    --body-text-color: #fff;
+    --inputtext-bg-color: #000;
+    --inputtext-color: #fff;
+    --menubar-item-color:#fff;
+    --menubar-item-bg-color:#000;
+    --panemenu-item-color:#fff;
+    --panelmenu-item-bg-color:#000;
   }
 
-  .p-panelmenu{
-    gap: 0 !important;
+  .p-menubar{
+    background-color: var(--navbar-bg-color) !important;
+  }
+
+  .p-menubar-item-link{
+    background-color: var(--menubar-item-bg-color) !important;
+    color: var(--menubar-item-color) !important;
   }
 
   .p-panelmenu-panel{
     border-radius: 0 !important;
     border: none !important;
+    background-color: var(--sidebar-bg-color) !important;
+  }
+  
+  .p-panelmenu-header-link{
+    background-color: var(--panelmenu-item-bg-color);
+    color: var(--panemenu-item-color) !important;
   }
 
+  .p-panelmenu-item-link{
+    background-color: var(--panelmenu-item-bg-color);
+    color: var(--panemenu-item-color) !important;
+  }
+
+  .p-inputtext{
+    background-color: var(--inputtext-bg-color) !important;
+    color: var(--inputtext-color) !important;
+  }
 
 body {
   background-color: var(--body-bg-color);
