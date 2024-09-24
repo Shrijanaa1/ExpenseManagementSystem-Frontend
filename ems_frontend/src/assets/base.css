@@ -25,25 +25,14 @@
     --body-text-color: var(--body-text-color-dark);
   }
 
-  .navbar .p-menubar-root-list{
-    gap: 10px;
-    font-size: 17px;
-    color: var(--menu-text-color); /* Dynamically set the text color based on theme */
+  .p-panelmenu{
+    gap: 0 !important;
   }
 
-  .sidebar .p-panelmenu-panel {
-    border: none;
-    margin: 5px;
-    color: var(--menu-text-color); /* Dynamically set the text color based on theme */
+  .p-panelmenu-panel{
+    border-radius: 0 !important;
+    border: none !important;
   }
-
-.sidebar .p-panelmenu-item-link{
-  padding: 5px;
-}
-
-.p-menubar-mobile .p-menubar-root-list{
-  background-color: var(--navbar-bg-color) !important;
-}
 
 body {
   background-color: var(--body-bg-color);

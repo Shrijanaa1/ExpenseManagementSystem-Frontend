@@ -23,7 +23,6 @@
       responsiveLayout="scroll"
       v-model:filters="filters"
       filterDisplay="row"
-      showGridlines
     >
 
     <template #empty> No transactions found. </template>
@@ -40,11 +39,13 @@
       <Column field="type" header="Type"></Column>
       <Column field="category" header="Category"></Column>
 
-      <Column field="description" header="Description" :filter="true">
-        <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input=" () => { filterCallback(); onFilterChange(); }" placeholder="Search by Description"/>
-        </template>
+      <Column field="description" header="Description" :filter="true" :showFilterMenu="false">
+        <template #filter="{ filterModel, filterCallback }"> <!-- filterModel holds current state of filter(value being typed) and filterCallback triggers filtering when the filter value changes-->
+          <InputText v-model="filterModel.value" @input=" () => { filterCallback(); onFilterChange(); }" placeholder="Search by Description"/>
+          <Select v-model="filterModel.customFilterType" :options="filterOptions"  optionLabel="label" placeholder="Select Filter Type" class="p-mr-2" @change="onFilterChange"/>
+          </template>
       </Column>
+
 
       <Column header="Actions">
         <template #body="slotProps">  <!-- #body directive allows to pass specific row's data to the button -->
@@ -74,6 +75,7 @@ import { ref, onMounted} from 'vue'; //ref: reactive references // onMounted: li
 import transactionService from '../router/transactionService';  //handles API requests to manage transaction
 import TransactionForm from './TransactionForm.vue';
 import { FilterMatchMode } from '@primevue/core/api';
+import Select from 'primevue/select';
 
 //Receive the sidebarVisible prop from the parent component(App.vue)
 const props = defineProps({
@@ -93,31 +95,39 @@ const rows = ref(10);
 
 
 const filters = ref({
-  id: { value: null, matchMode: FilterMatchMode.EQUALS },  // Filter for ID field
-  description: { value: null, matchMode: FilterMatchMode.CONTAINS },  // Filter for Description field
+  id: { value: null, matchMode: FilterMatchMode.EQUALS },  // value:null means no filter applied yet// matchMode means filter should match exact value
+  description: { value: null, customFilterType: 'contains' }  // Custom filter for Description field
 });
 
+const filterOptions = [
+  { label: 'Contains', value: 'contains' },
+  { label: 'Starts With', value: 'startsWith' },
+  { label: 'Ends With', value: 'endsWith' },
+  { label: 'Equals', value: 'equals' },
+];
+
 //Load transactions lazily with pagination
-const loadTransactions = async (page = 0, size = 10) => { //method called when component is mounted
+const loadTransactions = async (page = 0, size = 10) => {
   loading.value = true;
   try {
-    const response = await transactionService.getAll({ 
-      page, 
+    const response = await transactionService.getAll({
+      page,
       size,
       sortBy: 'id',
-      id: filters.value.id.value || null,  //Pass null if filter is not applied
-      description: filters.value.description.value || null
+      id: filters.value.id.value || null, //Passes the filter value for the id field or null if no value is set
+      description: filters.value.description.value || null, //Passes the filter value for the description field or null
+      filterType: filters.value.description.customFilterType || 'contains', // Pass custom filter type value for description or defaults to 'contains'
     });
-    transactions.value = response.data.content; //Pagination content
-    totalRecords.value = response.data.totalElements; //Total records for paginaiton
+    transactions.value = response.data.content; //once response is received , list of transaction(response.data.content) assigned to transaction reactive variable
+    totalRecords.value = response.data.totalElements; //total number of records (used for pagination) is assigned to the totalRecords
   } catch (error) {
     console.error('Error loading transactions:', error);
     errorMessage.value = 'Failed to load transactions. Please try again later.';
-  }
-  finally{
-    loading.value = false;
+  } finally {
+    loading.value = false; //indicates loading has finished
   }
 };
+
 
 const onPage = (event) => {
   first.value = event.first;
@@ -239,5 +249,8 @@ margin-bottom: 15px;
   color: green;
 }
 
+/* .p-inputtext{
+  border: 1px solid black !important;
+} */
 
 </style>

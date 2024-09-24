@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import Aura from '@primevue/themes/aura';
 
 import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
@@ -11,20 +12,29 @@ import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
 import Dialog from 'primevue/dialog';
 
+
 import Menubar from 'primevue/menubar';
 import Avatar from 'primevue/avatar';
 import Badge from 'primevue/badge';
 import Ripple from 'primevue/ripple'
 import PanelMenu from 'primevue/panelmenu'
+// import StyleClass from 'primevue/styleclass'
 
 import 'primeicons/primeicons.css';
 import './assets/base.css';
 import 'primeflex/primeflex.css';
+
    
 const app = createApp(App)
 
 app.use(router)
-app.use(PrimeVue);
+// app.use(PrimeVue);
+
+app.use(PrimeVue,{
+    theme: {
+        preset:Aura
+    }
+});
 
 app.component('Button', Button);
 app.component('InputText', InputText);
@@ -39,6 +49,7 @@ app.component('Avatar', Avatar)
 app.component('Badge',Badge)
 app.component('Ripple', Ripple)
 app.component('PanelMenu', PanelMenu)
+// app.component('StyleClass',StyleClass)
 
 
 app.mount('#app')

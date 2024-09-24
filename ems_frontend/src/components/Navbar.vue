@@ -11,7 +11,7 @@
         <template #end>
           <!-- Search Box -->
           <span class="p-input-icon-left nav-search">
-            <InputText v-model="searchQuery" placeholder="Search" />
+            <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
           </span>
   
           <!-- Theme Toggle Buttons -->
@@ -139,15 +139,13 @@ const setDarkTheme = () => {
 
 <style scoped>
 .navbar {
-  background-color: var(--navbar-bg-color);
+  /* background-color: var(--navbar-bg-color); */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  padding: 0;
   height: 50px;
   z-index: 1001;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -191,12 +189,6 @@ const setDarkTheme = () => {
   color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
-.p-inputtext{
-  border: 1px solid var(--menu-text-color);
-  border-radius: 4px;
-  padding: 3px;
-  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
-}
 
 </style>
 

@@ -9,7 +9,7 @@ export const validateNumber = (value, fieldName) => {
     if (isNaN(value)) { //If value is Not a Number
       return `${fieldName} must be a number`;
     }
-    if (Number(value) < 0) {
+    if (Number(value) <= 0) {
       return `${fieldName} must be a positive number`;
     }
     return '';
