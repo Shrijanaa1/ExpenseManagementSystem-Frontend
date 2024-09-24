@@ -46,7 +46,7 @@
         <Column header="Actions">
           <template #body="slotProps">
             <Button icon="pi pi-pencil" class="edit-button" @click="editTransaction(slotProps.data)" />
-            <Button icon="pi pi-trash" @click="deleteTransaction(slotProps.data.id)" />
+            <Button icon="pi pi-trash" @click="confirmDeleteTransaction(slotProps.data.id)" />
           </template>
         </Column>
       </DataTable>
@@ -59,6 +59,10 @@
       >
         <TransactionForm v-if="selectedTransaction" :transaction="selectedTransaction" @save="saveTransaction" @close="closeDialog" />
       </Dialog>
+
+      <!-- Confirm and Toast components-->
+      <Toast />
+      <ConfirmDialog />
     </div>
   </div>
 </template>
@@ -68,6 +72,9 @@ import { defineProps, ref, onMounted } from 'vue';
 import transactionService from '../router/transactionService';
 import TransactionForm from './TransactionForm.vue';
 import { FilterMatchMode } from '@primevue/core/api';
+import { useConfirm } from 'primevue/useconfirm';
+import { useToast } from 'primevue/useToast'
+
 
 const props = defineProps({
   sidebarVisible: Boolean,
@@ -155,15 +162,51 @@ const saveTransaction = async (transaction) => {
   }
 };
 
-// Delete transaction
-const deleteTransaction = async (id) => {
-  try {
-    await transactionService.delete(id);
-    loadTransactions();
-  } catch (error) {
-    console.error('Error deleting transaction:', error);
-    errorMessage.value = 'Failed to delete transaction. Please try again later.';
-  }
+// // Delete transaction
+// const deleteTransaction = async (id) => {
+//   try {
+//     await transactionService.delete(id);
+//     loadTransactions();
+//   } catch (error) {
+//     console.error('Error deleting transaction:', error);
+//     errorMessage.value = 'Failed to delete transaction. Please try again later.';
+//   }
+// };
+
+
+const confirm = useConfirm();
+const toast = useToast();
+
+// Confirm delete transaction
+const confirmDeleteTransaction = (id) => {
+  confirm.require({
+    message: 'Do you want to delete this transaction?',
+    header: 'Confirm Deletion',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true,
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger',
+    },
+    accept: async () => {
+      try {
+        await transactionService.delete(id);
+        loadTransactions();
+        toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Transaction deleted', life: 3000 });
+      } catch (error) {
+        console.error('Error deleting transaction:', error);
+        toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete transaction', life: 3000 });
+      }
+    },
+    reject: () => {
+      toast.add({ severity: 'error', summary: 'Rejected', detail: 'Transaction deletion cancelled', life: 3000 });
+    },
+  });
 };
 
 onMounted(loadTransactions);

@@ -18,7 +18,13 @@ import Avatar from 'primevue/avatar';
 import Badge from 'primevue/badge';
 import Ripple from 'primevue/ripple'
 import PanelMenu from 'primevue/panelmenu'
-// import StyleClass from 'primevue/styleclass'
+
+//Toast and Confirm dialog
+import Toast from 'primevue/toast';
+import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+
 
 import 'primeicons/primeicons.css';
 import './assets/base.css';
@@ -36,6 +42,10 @@ app.use(PrimeVue,{
     }
 });
 
+// Register Toast and ConfirmDialog globally
+app.use(ConfirmationService);
+app.use(ToastService);
+
 app.component('Button', Button);
 app.component('InputText', InputText);
 app.component('Select', Select);
@@ -49,7 +59,7 @@ app.component('Avatar', Avatar)
 app.component('Badge',Badge)
 app.component('Ripple', Ripple)
 app.component('PanelMenu', PanelMenu)
-// app.component('StyleClass',StyleClass)
-
+app.component('Toast', Toast);
+app.component('ConfirmDialog', ConfirmDialog);
 
 app.mount('#app')
