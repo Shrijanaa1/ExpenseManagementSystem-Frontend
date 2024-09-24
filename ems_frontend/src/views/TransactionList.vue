@@ -237,4 +237,5 @@ onMounted(loadTransactions);
   justify-content: flex-end;
   margin-bottom: 15px;
 }
+
 </style>

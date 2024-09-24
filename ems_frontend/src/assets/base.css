@@ -9,6 +9,8 @@
     --menubar-item-bg-color:#fff;
     --panemenu-item-color:#000;
     --panelmenu-item-bg-color:#fff;
+    --datatable-bg-color:#fff;
+    --datatable-color:#000;
   }
   
   [data-theme='light'] {
@@ -22,6 +24,8 @@
     --menubar-item-bg-color:#fff;
     --panemenu-item-color:#000;
     --panelmenu-item-bg-color:#fff;
+    --datatable-color:#000;
+    --datatable-bg-color:#fff;
   }
   
   [data-theme='dark'] {
@@ -35,6 +39,8 @@
     --menubar-item-bg-color:#000;
     --panemenu-item-color:#fff;
     --panelmenu-item-bg-color:#000;
+    --datatable-color:#fff;
+    --datatable-bg-color:#000;
   }
 
   .p-menubar{
@@ -66,6 +72,42 @@
     background-color: var(--inputtext-bg-color) !important;
     color: var(--inputtext-color) !important;
   }
+
+
+
+.p-datatable-header-cell{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+.p-datatable-table{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.p-datatable-tbody > tr > td{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.p-paginator{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.p-select-label{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.p-select-dropdown{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.p-select-option{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
 
 body {
   background-color: var(--body-bg-color);
