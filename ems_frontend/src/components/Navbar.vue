@@ -139,12 +139,10 @@ const setDarkTheme = () => {
 
 <style scoped>
 .navbar {
-  /* background-color: var(--navbar-bg-color); */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
   z-index: 1001;
 }
 
@@ -178,15 +176,9 @@ const setDarkTheme = () => {
   top: 72px;
   left: 0px;
   width: 250px;
-  
-  background-color: var(--sidebar-bg-color);
+  /* background-color: var(--sidebar-bg-color); */
   z-index: 1000;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-}
-
-.close-sidebar{
-  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
 

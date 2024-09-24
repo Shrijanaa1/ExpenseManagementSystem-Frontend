@@ -1,5 +1,4 @@
 <template>
-
   <!-- Navbar component with sidebarVisible prop and toggleSidebar function-->
   <Navbar :sidebarVisible="sidebarVisible" :toggleSidebar="toggleSidebar"/>
   
