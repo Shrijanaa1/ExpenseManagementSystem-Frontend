@@ -36,6 +36,7 @@
                 <DatePicker 
                     v-model="budget.startDate" 
                     showIcon 
+                    fluid
                     @blur="validateField('startDate')"
                 />
                 <div v-if="formErrors.startDate" class="error">{{ formErrors.startDate }}</div>
@@ -46,6 +47,7 @@
                 <DatePicker 
                     v-model="budget.endDate" 
                     showIcon 
+                    fluid
                     @blur="validateField('endDate')"
                 />
                 <div v-if="formErrors.endDate" class="error">{{ formErrors.endDate }}</div>
@@ -152,26 +154,6 @@ onMounted(() => {
 <style scoped>
 .form-wrapper {
   padding: 10px;
-}
-
-.labels {
-  font-weight: bold;
-}
-
-.amount-wrapper{
-  display: flex;
-  align-items: center;
-}
-
-.currency-label{
-  margin-right: 3px;
-  font-weight: bold;
-  color: var(--datatable-color) !important;
-}
-
-.input-field {
-  width: 100%;
-  margin-bottom: 10px;
 }
 
 .button-row {

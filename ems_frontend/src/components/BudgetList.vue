@@ -118,7 +118,8 @@
   // Edit Budget
   const editBudget = (budget) => {
     selectedBudget.value = { ...budget };  //(...) spread operator, create a copy of the Budget object so that editing the Budget does not affect the original data until explicitly saved
-  };
+    dialogVisible.value = true; // Open the dialog after setting the selected budget
+};
   
   // Save Budget and reload list
   const saveBudget = async (budget) => {
