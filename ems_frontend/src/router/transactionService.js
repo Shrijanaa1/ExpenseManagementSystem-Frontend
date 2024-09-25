@@ -1,29 +1,60 @@
 import axios from 'axios';
 
-const apiClient = axios.create({ //defining default settings for all HTTP requests made through it
+//Transaction API client
+const transactionApiClient = axios.create({ //defining default settings for all HTTP requests made through it
   baseURL: 'http://localhost:8082/api/transactions', 
   headers: {
     'Content-Type': 'application/json', //data sent in requests will be in JSON format
   },
 });
 
-export default {  //exports an object that contains methods for interacting with the API
+//Budget API client
+const budgetApiClient = axios.create({ //defining default settings for all HTTP requests made through it
+  baseURL: 'http://localhost:8082/api/budgets', 
+  headers: {
+    'Content-Type': 'application/json', //data sent in requests will be in JSON format
+  },
+});
+
+
+export default { 
+
+  //Transaction API methods
   getAll(params) {
-    return apiClient.get('', { params });
+    return transactionApiClient.get('', { params });
   },
   getById(id) {
-    return apiClient.get(`/${id}`);
+    return transactionApiClient.get(`/${id}`);
   },
   create(transaction) {
-    return apiClient.post('', transaction);
+    return transactionApiClient.post('', transaction);
   },
   update(id, transaction) {
-    return apiClient.put(`/${id}`, transaction);
+    return transactionApiClient.put(`/${id}`, transaction);
   },
   delete(id) {
-    return apiClient.delete(`/${id}`);
+    return transactionApiClient.delete(`/${id}`);
   },
   getCategories(type) {
-    return apiClient.get(`/categories/${type}`);
+    return transactionApiClient.get(`/categories/${type}`);
   },
+
+
+  //Budget API methods
+
+  getById(id) {
+    return budgetApiClient.get(`/${id}`);
+  },
+  create(budget) {
+    return budgetApiClient.post('', budget);
+  },
+  update(id, budget) {
+    return budgetApiClient.put(`/${id}`, budget);
+  },
+  delete(id) {
+    return budgetApiClient.delete(`/${id}`);
+  },
+
 };
+
+
