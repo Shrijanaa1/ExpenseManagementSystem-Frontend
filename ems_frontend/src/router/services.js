@@ -20,41 +20,46 @@ const budgetApiClient = axios.create({ //defining default settings for all HTTP 
 export default { 
 
   //Transaction API methods
-  getAll(params) {
+  getAllTransactions(params) {
     return transactionApiClient.get('', { params });
   },
-  getById(id) {
+  getTransactionById(id) {
     return transactionApiClient.get(`/${id}`);
   },
-  create(transaction) {
+  createTransaction(transaction) {
     return transactionApiClient.post('', transaction);
   },
-  update(id, transaction) {
+  updateTransaction(id, transaction) {
     return transactionApiClient.put(`/${id}`, transaction);
   },
-  delete(id) {
+  deleteTransaction(id) {
     return transactionApiClient.delete(`/${id}`);
   },
-  getCategories(type) {
+  getTransactionCategories(type) {
     return transactionApiClient.get(`/categories/${type}`);
   },
 
 
   //Budget API methods
 
-  getById(id) {
+  getAllBudgets(params) {
+    return budgetApiClient.get('', { params });
+  },
+  getBudgetById(id) {
     return budgetApiClient.get(`/${id}`);
   },
-  create(budget) {
+  createBudget(budget) {
     return budgetApiClient.post('', budget);
   },
-  update(id, budget) {
+  updateBudget(id, budget) {
     return budgetApiClient.put(`/${id}`, budget);
   },
-  delete(id) {
+  deleteBudget(id) {
     return budgetApiClient.delete(`/${id}`);
   },
-
+  getBudgetCategories(type) {
+    return budgetApiClient.get(`/categories/${type}`);
+  },
 };
 
 

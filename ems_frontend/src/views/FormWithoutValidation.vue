@@ -51,7 +51,7 @@
   const categories = ref([]); //eactive empty array, which will be filled with the available categories fetched from the server
   
   const fetchCategories = async () => {  //asynchronous function that fetches categories from the server based on the selected transaction type
-    const response = await transactionService.getCategories(form.value.type);  //Pauses the function execution until transactionService.getCategories() returns a value (a promise)
+    const response = await transactionService.getTransactionCategories(form.value.type);  //Pauses the function execution until transactionService.getCategories() returns a value (a promise)
     categories.value = response.data;  // result is stored in categories.value, making it reactive and updating the UI automatically
   };
   

@@ -98,7 +98,7 @@ const filters = ref({
 const loadTransactions = async (page = 0, size = 10) => {
   loading.value = true;
   try {
-    const response = await transactionService.getAll({
+    const response = await transactionService.getAllTransactions({
       page,
       size,
       sortBy: 'id',
@@ -149,9 +149,9 @@ const editTransaction = (transaction) => {
 const saveTransaction = async (transaction) => {
   try {
     if (transaction.id) {
-      await transactionService.update(transaction.id, transaction);
+      await transactionService.updateTransaction(transaction.id, transaction);
     } else {
-      await transactionService.create(transaction);
+      await transactionService.createTransaction(transaction);
     }
     loadTransactions();
     dialogVisible.value = false;
@@ -194,7 +194,7 @@ const confirmDeleteTransaction = (id) => {
     },
     accept: async () => {   //asynchronous because it involves server request
       try { 
-        await transactionService.delete(id); 
+        await transactionService.deleteTransaction(id); 
         loadTransactions();   //reloads transaction list to reflect changes
         toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Transaction deleted', life: 3000 }); //message disappers after 3 seconds
       } catch (error) {

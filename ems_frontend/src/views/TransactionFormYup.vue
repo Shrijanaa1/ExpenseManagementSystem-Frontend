@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import * as yup from 'yup';
 import transactionService from '@/router/services';
 
@@ -125,7 +125,7 @@ const schema = yup.object().shape({
 });
 
 const fetchCategories = async () => {
-  const response = await transactionService.getCategories(form.value.type);
+  const response = await transactionService.getTransactionCategories(form.value.type);
   categories.value = response.data;
 };
 

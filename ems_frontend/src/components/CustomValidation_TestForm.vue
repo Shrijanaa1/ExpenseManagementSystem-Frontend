@@ -89,7 +89,7 @@ const formErrors = ref({
 });
 
 const fetchCategories = async () => {
-  const response = await transactionService.getCategories(form.value.type);
+  const response = await transactionService.getTransactionCategories(form.value.type);
   categories.value = response.data;
 };
 
