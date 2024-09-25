@@ -69,7 +69,7 @@
 
 <script setup>
 import { defineProps, ref, onMounted } from 'vue';
-import transactionService from '../router/transactionService';
+import transactionService from '../router/services';
 import TransactionForm from './TransactionForm.vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useConfirm } from 'primevue/useconfirm';

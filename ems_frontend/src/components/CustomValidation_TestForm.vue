@@ -64,7 +64,7 @@
 <script setup>
 import { ref } from 'vue';
 import { validateRequired, validateNumber, validateMinLength } from '@/utils/validationUtils';
-import transactionService from '@/router/transactionService';
+import transactionService from '@/router/services';
 
 import { debounce } from 'lodash'; 
 

@@ -76,7 +76,7 @@
 <script setup>
 import { ref } from 'vue';    //ref:updates UI dynamically wehn value changes
 import * as yup from 'yup';
-import transactionService from '@/router/transactionService';
+import transactionService from '@/router/services';
 
 import { debounce } from 'lodash'; 
 

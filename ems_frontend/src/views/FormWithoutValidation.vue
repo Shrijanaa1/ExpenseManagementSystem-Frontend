@@ -32,7 +32,7 @@
   <script setup>
   import { ref, watch } from 'vue';  //ref: to create reactive variables that tracks for changes 
                                      // watch: function that reacts to changes in specific values and runs a function when watched value changes
-  import transactionService from '@/router/transactionService';
+  import transactionService from '@/router/services';
   
   
   const props = defineProps({  // props: data passed to the component from a parent. Here it expects a transaction object

@@ -64,7 +64,7 @@ import { ref, watch } from 'vue';
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { required, min, min_value } from '@vee-validate/rules';
 import { defineRule, configure } from 'vee-validate';
-import transactionService from '@/router/transactionService';
+import transactionService from '@/router/services';
 
 // Registering validation rules globally
 defineRule('required', required);
