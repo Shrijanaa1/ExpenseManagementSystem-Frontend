@@ -28,8 +28,8 @@
         <template #loading> Loading transaction data. Please wait. </template>
 
         <Column field="id" header="ID" :filter="true" :showFilterMenu="false">
-          <template #filter="{ filterModel, filterCallback }">
-            <InputText v-model="filterModel.value" @input="() => { filterCallback(); onFilterChange(); }" placeholder="Search by ID" />
+          <template #filter="{ filterModel, filterCallback }">  <!-- filterModel holds currents value of the filter input, filterCallback funtion triggers filtering logic when user enters or changes filter input-->
+            <InputText v-model="filterModel.value" @input="() => { filterCallback(); }" placeholder="Search by ID" />
           </template>
         </Column>
 
@@ -80,17 +80,17 @@ const props = defineProps({
   sidebarVisible: Boolean,
 });
 
-const transactions = ref([]);
-const selectedTransaction = ref(null);
-const dialogVisible = ref(false);
-const errorMessage = ref(null);
-const totalRecords = ref(0);
-const loading = ref(false);
-const first = ref(0);
-const rows = ref(10);
+const transactions = ref([]); //holds list of transactions that will be displayed in UI
+const selectedTransaction = ref(null); //used for editing or viewing details
+const dialogVisible = ref(false); //Controls visibility of dialog
+const errorMessage = ref(null); //Stores error message
+const totalRecords = ref(0); //Stores total number of transactions available in backend(for pagination)
+const loading = ref(false); //shows loading spinner
+const first = ref(0); //index of first record, initially 0, meaning first page
+const rows = ref(10); //No of rows displayed per page, initially set to 10
 
 const filters = ref({
-  id: { value: null, matchMode: FilterMatchMode.EQUALS },
+  id: { value: null, matchMode: FilterMatchMode.EQUALS },  //value:null means initially no filter applied to id, when user updates something this value will be updated
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
@@ -107,8 +107,8 @@ const loadTransactions = async (page = 0, size = 10) => {
       filterType: filters.value.description.matchMode || 'contains', // Use the selected filter match mode
   });
 
-    transactions.value = response.data.content;
-    totalRecords.value = response.data.totalElements;
+    transactions.value = response.data.content; // Stores the fetched transactions in the transactions array to be displayed
+    totalRecords.value = response.data.totalElements; // Set total record count for pagination
   } catch (error) {
     console.error('Error loading transactions:', error);
     errorMessage.value = 'Failed to load transactions. Please try again later.';
@@ -125,8 +125,8 @@ const onPage = (event) => {
 };
 
 const onFilterChange = () => {
-  first.value = 0; // Reset to first page when filter changes
-  loadTransactions();
+  first.value = 0; // Resets pagination to first page when filter changes
+  loadTransactions(); //reloads transaction with new filter applied
 };
 
 // Open dialog for new transaction
@@ -142,8 +142,7 @@ const closeDialog = () => {
 
 // Edit transaction
 const editTransaction = (transaction) => {
-  selectedTransaction.value = { ...transaction };
-  dialogVisible.value = true;
+  selectedTransaction.value = { ...transaction };  //(...) spread operator, create a copy of the transaction object so that editing the transaction does not affect the original data until explicitly saved
 };
 
 // Save transaction and reload list
@@ -179,9 +178,9 @@ const toast = useToast();
 
 // Confirm delete transaction
 const confirmDeleteTransaction = (id) => {
-  confirm.require({
+  confirm.require({  //triggers a confirmation dialog
     message: 'Do you want to delete this transaction?',
-    header: 'Confirm Deletion',
+    header: 'Confirm Delete',
     icon: 'pi pi-info-circle',
     rejectLabel: 'Cancel',
     rejectProps: {
@@ -193,11 +192,11 @@ const confirmDeleteTransaction = (id) => {
       label: 'Delete',
       severity: 'danger',
     },
-    accept: async () => {
-      try {
-        await transactionService.delete(id);
-        loadTransactions();
-        toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Transaction deleted', life: 3000 });
+    accept: async () => {   //asynchronous because it involves server request
+      try { 
+        await transactionService.delete(id); 
+        loadTransactions();   //reloads transaction list to reflect changes
+        toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Transaction deleted', life: 3000 }); //message disappers after 3 seconds
       } catch (error) {
         console.error('Error deleting transaction:', error);
         toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete transaction', life: 3000 });
@@ -209,7 +208,8 @@ const confirmDeleteTransaction = (id) => {
   });
 };
 
-onMounted(loadTransactions);
+onMounted(loadTransactions); //perform actions when the component is mounted (e.g., fetch data)
+
 </script>
 
 <style>

@@ -109,6 +109,25 @@
   color: var(--datatable-color) !important;
 }
 
+.p-dialog-header{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.p-dialog-content{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
+.labels{
+  color: var(--datatable-color) !important;
+}
+
+.p-dialog-footer{
+  background-color: var(--datatable-bg-color) !important;
+  color: var(--datatable-color) !important;
+}
+
 body {
   background-color: var(--body-bg-color);
   color: var(--body-text-color);

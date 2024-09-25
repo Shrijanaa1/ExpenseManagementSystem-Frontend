@@ -182,6 +182,7 @@ const handleSubmit = async () => {
 .currency-label{
   margin-right: 3px;
   font-weight: bold;
+  color: var(--datatable-color) !important;
 }
 
 .input-field {
@@ -199,4 +200,6 @@ const handleSubmit = async () => {
 .error {
   color: red;
 }
+
+
 </style>
