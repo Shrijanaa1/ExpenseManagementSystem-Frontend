@@ -4,6 +4,7 @@ import TransactionFormWithVeeValidate from '@/views/TransactionFormWithVeeValida
 import Navbar from '@/components/Navbar.vue'
 import Home from '@/components/Home.vue'
 import TestForm from '@/components/CustomValidation_TestForm.vue'
+import BudgetForm from '@/components/BudgetForm.vue'
 
 
 const router = createRouter({
@@ -34,6 +35,11 @@ const router = createRouter({
       name: 'testForm',
       component: TestForm
     },
+    {
+      path: '/budgetForm',
+      name: 'budgetForm',
+      component: BudgetForm
+    }
   ]
 })
 
