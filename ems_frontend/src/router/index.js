@@ -3,7 +3,6 @@ import TransactionList from '@/views/TransactionList.vue'
 import TransactionFormWithVeeValidate from '@/views/TransactionFormWithVeeValidate.vue'
 import Navbar from '@/components/Navbar.vue'
 import Home from '@/components/Home.vue'
-import Transaction from '@/components/Transaction.vue'
 import TestForm from '@/components/CustomValidation_TestForm.vue'
 
 
@@ -29,11 +28,6 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: Home
-    },
-    {
-      path: '/transaction',
-      name: 'transaction',
-      component: Transaction
     },
     {
       path: '/testForm',
