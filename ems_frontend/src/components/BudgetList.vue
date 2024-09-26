@@ -7,6 +7,10 @@
           <Button icon="pi pi-plus" class="add-button" @click="openDialog" />
         </div>
   
+        <div class="reload-budget-container">
+          <Button icon="pi pi-refresh" class="reload-button" @click="reloadBudgets" label="Reload Budgets" />
+        </div>
+
         <DataTable
           :value="budgets"
           :lazy="true"
@@ -173,6 +177,20 @@
     });
   };
   
+  const reloadBudgets = async () => {
+    try {
+      loading.value = true;
+      await budgetService.updateAllBudgetsRemainingAmounts(); // Call the backend API to update remaining amounts
+      loadBudgets(); // Reload the budget list
+      toast.add({ severity: 'success', summary: 'Reloaded', detail: 'Budgets reloaded successfully', life: 3000 });
+    } catch (error) {
+      console.error('Error reloading budgets:', error);
+      toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to reload budgets', life: 3000 });
+    } finally {
+      loading.value = false;
+    }
+  };
+
   onMounted(loadBudgets); //perform actions when the component is mounted (e.g., fetch data)
   
   </script>

@@ -60,6 +60,11 @@ export default {
   getBudgetCategories(type) {
     return budgetApiClient.get(`/categories/${type}`);
   },
+
+  updateAllBudgetsRemainingAmounts() {
+    return budgetApiClient.post('/reload'); // Call the reload endpoint
+  }
+
 };
 
 
