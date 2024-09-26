@@ -42,11 +42,6 @@ const router = createRouter({
       component: TestForm
     },
     {
-      path: '/budgetForm',
-      name: 'budgetForm',
-      component: BudgetForm
-    },
-    {
       path: '/budgetList',
       name: 'budgetList',
       component: BudgetList

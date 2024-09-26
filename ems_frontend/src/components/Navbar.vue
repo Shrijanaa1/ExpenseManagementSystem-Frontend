@@ -57,18 +57,7 @@ const items = ref([
   {
     label: 'Budgets',
     icon: 'pi pi-wallet',
-    items: [
-      { 
-        label: 'Add Budget', 
-        icon: 'pi pi-plus',
-        command: () => { router.push({ name: 'budgetForm'}) }
-      },
-      { 
-        label: 'View Budgets',
-        icon: 'pi pi-eye',
-        command: () => { router.push({ name: 'budgetList'}) }
-      }
-    ]
+    command: () => { router.push({ name: 'budgetList'}) }
   },
   {
     label: 'Reports',

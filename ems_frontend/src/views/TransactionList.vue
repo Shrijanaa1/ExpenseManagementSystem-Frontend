@@ -143,6 +143,7 @@ const closeDialog = () => {
 // Edit transaction
 const editTransaction = (transaction) => {
   selectedTransaction.value = { ...transaction };  //(...) spread operator, create a copy of the transaction object so that editing the transaction does not affect the original data until explicitly saved
+  dialogVisible.value = true; // Open the dialog after setting the selected budget
 };
 
 // Save transaction and reload list
@@ -160,18 +161,6 @@ const saveTransaction = async (transaction) => {
     errorMessage.value = 'Failed to save transaction. Please try again later.';
   }
 };
-
-// // Delete transaction
-// const deleteTransaction = async (id) => {
-//   try {
-//     await transactionService.delete(id);
-//     loadTransactions();
-//   } catch (error) {
-//     console.error('Error deleting transaction:', error);
-//     errorMessage.value = 'Failed to delete transaction. Please try again later.';
-//   }
-// };
-
 
 const confirm = useConfirm();
 const toast = useToast();
