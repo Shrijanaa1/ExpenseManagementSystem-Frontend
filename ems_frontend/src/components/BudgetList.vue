@@ -5,10 +5,7 @@
   
         <div class="add-budget-container">
           <Button icon="pi pi-plus" class="add-button" @click="openDialog" />
-        </div>
-  
-        <div class="reload-budget-container">
-          <Button icon="pi pi-refresh" class="reload-button" @click="reloadBudgets" label="Reload Budgets" />
+          <Button icon="pi pi-refresh" class="reload-button" @click="reloadBudgets" />
         </div>
 
         <DataTable
