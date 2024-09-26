@@ -127,10 +127,16 @@
     try {
       if (budget.id) {
         await budgetService.updateBudget(budget.id, budget);
+        //Find the budget in the list and update it
+        const index = budgets.value.findIndex(b => b.id === budget.id);
+        if(index != -1){
+          budgets.value[index] = {...budget}; //Update only the modified row
+        }
       } else {
-        await budgetService.createBudget(budget);
+        const newBudget = await budgetService.createBudget(budget);
+        budgets.value.push(newBudget.data); //Add the newly created budget to the list
       }
-      loadBudgets();
+      // loadBudgets();
       dialogVisible.value = false;
     } catch (error) {
       console.error('Error saving budget:', error);
