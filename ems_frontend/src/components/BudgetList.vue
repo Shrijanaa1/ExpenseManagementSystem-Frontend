@@ -6,6 +6,7 @@
         <div class="add-budget-container">
           <Button icon="pi pi-plus" class="add-button" @click="openDialog" />
           <Button icon="pi pi-refresh" class="reload-button" @click="reloadBudgets" />
+          <Button icon="pi pi-file-pdf" @click="exportToPDF" />
         </div>
 
         <DataTable
@@ -55,6 +56,7 @@
         <ConfirmDialog />
       </div>
     </div>
+
   </template>
   
   <script setup>
@@ -63,6 +65,7 @@
   import { useConfirm } from 'primevue/useconfirm';
   import { useToast } from 'primevue/useToast'
   import BudgetForm from './BudgetForm.vue';
+  import html2pdf from 'html2pdf.js';
   
   
   const props = defineProps({
@@ -193,6 +196,20 @@
       loading.value = false;
     }
   };
+
+  //Export DataTable as pdf
+  const exportToPDF = () => {
+    const element = document.querySelector('.budgetList-content');
+    const opt = {
+      margin: [10,10],
+      filename: 'budget-list.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+    };
+
 
   onMounted(loadBudgets); //perform actions when the component is mounted (e.g., fetch data)
   
