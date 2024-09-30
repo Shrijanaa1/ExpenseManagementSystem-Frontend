@@ -13,15 +13,15 @@
           <span class="p-input-icon-left nav-search">
             <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
           </span>
-  
-          <!-- Theme Toggle Buttons -->
-          <Button icon="pi pi-sun" class="theme-icon" @click="setLightTheme"/>
-          <Button icon="pi pi-moon" class="theme-icon" @click="setDarkTheme"/>
           
           <!-- Profile Icon -->
           <img src="@/assets/expense1.png" alt="Profile" class="profile-icon"/>
         </template>
       </Menubar>
+
+      <Dialog header="Theme Swticher" v-model:visible="displayThemeSwitcher" :modal="true">
+            <ThemeSwitcher />
+      </Dialog>
    </div>
   
 
@@ -37,6 +37,7 @@
 <script setup>
 import { ref } from 'vue';   //Creates reactive variable
 import { useRouter } from 'vue-router';    //for navigation
+import ThemeSwitcher from './ThemeSwitcher.vue';
 
 const router = useRouter(); //Initialize router
 
@@ -67,6 +68,11 @@ const items = ref([
       { label: 'Yearly Reports', icon: 'pi pi-calendar-plus' }
     ]
   },
+  {
+        label: 'Theme',
+        icon: 'pi pi-cog',
+        command: () => displayThemeSwitcher.value = true
+  }
 ]);
 
 //Menu Items for Sidebar Menubar
@@ -123,13 +129,12 @@ sidebarVisible: Boolean,
 toggleSidebar: Function,
 });
 
-// Methods to handle theme switching, by changing the data-theme attribute of the document's root element
-const setLightTheme = () => {
-  document.documentElement.setAttribute('data-theme', 'light');
-};
+// Sidebar visibility state
+const sidebarVisible = ref(false); // Sidebar is initially hidden
 
-const setDarkTheme = () => {
-  document.documentElement.setAttribute('data-theme', 'dark');
+// Toggle the sidebar visibility
+const toggleSidebar = () => {
+  sidebarVisible.value = !sidebarVisible.value;
 };
 
 </script>
