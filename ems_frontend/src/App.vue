@@ -27,5 +27,6 @@ const toggleSidebar = () => {
 
 .main-content{
   padding-top: 55px;
+  transition: margin-left 0.3s ease; /* Smooth transition for content shift */
 }
 </style>

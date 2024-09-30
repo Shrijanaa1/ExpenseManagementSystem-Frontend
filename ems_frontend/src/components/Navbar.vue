@@ -2,23 +2,20 @@
   <!-- Top Menubar -->
    <div class="navbar">
       <Menubar :model="items">   <!-- :model is a Vue binding to pass data dynamically-->
+        
         <template #start>
-
-          <Button v-if="!sidebarVisible" icon="pi pi-bars" class="hamburger-menu" @click="toggleSidebar"/>   <!-- hamburger button will only be shown when the sidebar is not visible -->
-          <!-- Logo on the left side -->
+          <Button icon="pi pi-bars" class="hamburger-menu" @click="toggleSidebar"/>   
           <img src="@/assets/expense1.png" alt="Logo" class="logo"/>
         </template>
+        
         <template #end>
-          <!-- Search Box -->
           <span class="p-input-icon-left nav-search">
             <InputText placeholder="Search" type="text" class="w-32 sm:w-auto" />
           </span>
-          
-          <!-- Profile Icon -->
           <img src="@/assets/expense1.png" alt="Profile" class="profile-icon"/>
         </template>
-      </Menubar>
 
+      </Menubar>
       <Dialog header="Theme Swticher" v-model:visible="displayThemeSwitcher" :modal="true">
             <ThemeSwitcher />
       </Dialog>
@@ -27,8 +24,6 @@
 
   <!-- Sidebar Menubar -->
    <div class="sidebar" v-if="sidebarVisible">
-    <!-- Close Button for Sidebar -->
-    <Button icon="pi pi-times" class="close-sidebar" @click="toggleSidebar"/>  
     <PanelMenu :model="itemsSidebar" class="sidebar-menubar" />
    </div>
 
@@ -42,6 +37,8 @@ import ThemeSwitcher from './ThemeSwitcher.vue';
 const router = useRouter(); //Initialize router
 
 const searchQuery = ref('');   // Declares a reactive searchQuery variable with an initial value of an empty string.
+
+const displayThemeSwitcher = ref(false);
 
 // Menu Items for Top Navbar
 const items = ref([
@@ -72,7 +69,7 @@ const items = ref([
         label: 'Theme',
         icon: 'pi pi-cog',
         command: () => displayThemeSwitcher.value = true
-  }
+    }
 ]);
 
 //Menu Items for Sidebar Menubar
@@ -129,13 +126,10 @@ sidebarVisible: Boolean,
 toggleSidebar: Function,
 });
 
-// Sidebar visibility state
-const sidebarVisible = ref(false); // Sidebar is initially hidden
-
 // Toggle the sidebar visibility
-const toggleSidebar = () => {
-  sidebarVisible.value = !sidebarVisible.value;
-};
+// const toggleSidebar = () => {
+//   sidebarVisible.value = !sidebarVisible.value;
+// };
 
 </script>
 
@@ -155,16 +149,6 @@ const toggleSidebar = () => {
 
 .hamburger-menu{
   margin-right: 1rem;
-  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
-}
-
-.nav-search {
-  margin-right: 1rem;
-}
-
-.theme-icon {
-  margin-right: 1rem;
-  color: var(--menu-text-color); /* Dynamically set the text color based on theme */
 }
 
 .profile-icon {
@@ -175,15 +159,13 @@ const toggleSidebar = () => {
 
 .sidebar{
   position: fixed;
-  top: 72px;
+  top: 68px;
   left: 0px;
   width: 250px;
   height: 100%;
-  background-color: var(--sidebar-bg-color);
   z-index: 1000;
   box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
-
 
 </style>
 
