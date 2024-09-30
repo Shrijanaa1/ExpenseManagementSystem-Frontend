@@ -38,6 +38,7 @@
             <template #body="slotProps">
               <Button icon="pi pi-pencil" class="edit-button" @click="editBudget(slotProps.data)" />
               <Button icon="pi pi-trash" @click="confirmDeleteBudget(slotProps.data.id)" />
+              <Button icon="pi pi-file-pdf" @click="exportBudgetToPDF(slotProps.data)" />
             </template>
           </Column>
         </DataTable>
@@ -200,6 +201,7 @@
   //Export DataTable as pdf
   const exportToPDF = () => {
     const element = document.querySelector('.budgetList-content');
+
     const opt = {
       margin: [10,10],
       filename: 'budget-list.pdf',
@@ -210,7 +212,35 @@
     html2pdf().set(opt).from(element).save();
     };
 
+  //Export specific row as PDF
+  const exportBudgetToPDF = (budget) => {
+    //Create custom HTML content for the PDF with budget details 
 
+    const content = `
+      <div>
+      <h1>Test Print</h1>
+      <h2>Budget Details for ID: ${budget.id}</h2>
+      <p><strong>Category:</strong> ${budget.category}</p>
+      <p><strong>Budget Limit:</strong> ${budget.budgetLimit}</p>
+      <p><strong>Remaining Amount:</strong> ${budget.remainingAmount}</p>
+      <p><strong>Start Date:</strong> ${budget.startDate}</p>
+      <p><strong>End Date:</strong> ${budget.endDate}</p>
+      <p><strong>Remarks:</strong> ${budget.remarks}</p>
+      </div>
+    `;
+
+    const opt = {
+      margin: [10,10],
+      filename: `budget-${budget.id}-details.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    //convert the custom HTML content to a pdf
+    html2pdf().set(opt).from(content).save();
+  }
+ 
   onMounted(loadBudgets); //perform actions when the component is mounted (e.g., fetch data)
   
   </script>
