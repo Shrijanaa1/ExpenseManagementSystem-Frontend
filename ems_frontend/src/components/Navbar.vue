@@ -16,7 +16,7 @@
         </template>
 
       </Menubar>
-      <Dialog header="Theme Swticher" v-model:visible="displayThemeSwitcher" :modal="true">
+      <Dialog header="Theme Switcher" v-model:visible="displayThemeSwitcher" :modal="true">
             <ThemeSwitcher />
       </Dialog>
    </div>
@@ -126,10 +126,6 @@ sidebarVisible: Boolean,
 toggleSidebar: Function,
 });
 
-// Toggle the sidebar visibility
-// const toggleSidebar = () => {
-//   sidebarVisible.value = !sidebarVisible.value;
-// };
 
 </script>
 
@@ -164,7 +160,7 @@ toggleSidebar: Function,
   width: 250px;
   height: 100%;
   z-index: 1000;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--sidebar-box-shadow);
 }
 
 </style>

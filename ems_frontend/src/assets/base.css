@@ -6,6 +6,7 @@
   --border-color: var(--p-surface-200);
   --text-color: var(--p-surface-700);
   --overlay-background: #ffffff;
+  --sidebar-box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 :root[class='p-dark'] {
@@ -16,6 +17,7 @@
   --border-color: rgba(255, 255, 255, 0.1);
   --text-color: var(--p-surface-0);
   --overlay-background: var(--p-surface-900);
+  --sidebar-box-shadow: 2px 0px 5px rgba(255, 255, 255, 0.2);
 }
 
 html {
