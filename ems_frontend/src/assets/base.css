@@ -1,134 +1,43 @@
 :root {
-    --navbar-bg-color: #fff; /* Custom property for the navbar background color */
-    --sidebar-bg-color: #fff;
-    --body-bg-color: #ffffff;
-    --body-text-color: #000;
-    --inputtext-bg-color: #fff;
-    --inputtext-color: #000;
-    --menubar-item-color:#000;
-    --menubar-item-bg-color:#fff;
-    --panemenu-item-color:#000;
-    --panelmenu-item-bg-color:#fff;
-    --datatable-bg-color:#fff;
-    --datatable-color:#000;
-  }
-  
-  [data-theme='light'] {
-    --navbar-bg-color: #fff;
-    --sidebar-bg-color: #fff;
-    --body-bg-color: #fff;
-    --body-text-color: #000;
-    --inputtext-bg-color: #fff;
-    --inputtext-color: #000;
-    --menubar-item-color:#000;
-    --menubar-item-bg-color:#fff;
-    --panemenu-item-color:#000;
-    --panelmenu-item-bg-color:#fff;
-    --datatable-color:#000;
-    --datatable-bg-color:#fff;
-  }
-  
-  [data-theme='dark'] {
-    --navbar-bg-color: #000;
-    --sidebar-bg-color: #000;
-    --body-bg-color: #000;
-    --body-text-color: #fff;
-    --inputtext-bg-color: #000;
-    --inputtext-color: #fff;
-    --menubar-item-color:#fff;
-    --menubar-item-bg-color:#000;
-    --panemenu-item-color:#fff;
-    --panelmenu-item-bg-color:#000;
-    --datatable-color:#fff;
-    --datatable-bg-color:#000;
-  }
-
-  .p-menubar{
-    background-color: var(--navbar-bg-color) !important;
-  }
-
-  .p-menubar-item-link{
-    background-color: var(--menubar-item-bg-color) !important;
-    color: var(--menubar-item-color) !important;
-  }
-
-  .p-panelmenu-panel{
-    border-radius: 0 !important;
-    border: none !important;
-    background-color: var(--sidebar-bg-color) !important;
-  }
-  
-  .p-panelmenu-header-link{
-    background-color: var(--panelmenu-item-bg-color);
-    color: var(--panemenu-item-color) !important;
-  }
-
-  .p-panelmenu-item-link{
-    background-color: var(--panelmenu-item-bg-color);
-    color: var(--panemenu-item-color) !important;
-  }
-
-  .p-inputtext{
-    background-color: var(--inputtext-bg-color) !important;
-    color: var(--inputtext-color) !important;
-  }
-
-
-
-.p-datatable-header-cell{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-.p-datatable-table{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
+  --body-bg: var(--p-surface-50);
+  --body-text-color: var(--p-surface-900);
+  --card-border: 1px solid var(--border-color);
+  --card-bg: var(--p-surface-0);
+  --border-color: var(--p-surface-200);
+  --text-color: var(--p-surface-700);
+  --overlay-background: #ffffff;
 }
 
-.p-datatable-tbody > tr > td{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
+:root[class='p-dark'] {
+  --body-bg: var(--p-surface-950);
+  --body-text-color: var(--p-surface-50);
+  --card-border: 1px solid transparent;
+  --card-bg: var(--p-surface-900);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-color: var(--p-surface-0);
+  --overlay-background: var(--p-surface-900);
 }
 
-.p-paginator{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-
-.p-select-label{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-
-.p-select-dropdown{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-
-.p-select-option{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-
-.p-dialog-header{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-
-.p-dialog-content{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
-}
-
-.labels{
-  color: var(--datatable-color) !important;
-}
-
-.p-dialog-footer{
-  background-color: var(--datatable-bg-color) !important;
-  color: var(--datatable-color) !important;
+html {
+  font-size: 14px;
 }
 
 body {
-  background-color: var(--body-bg-color);
+  margin: 0px;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--body-bg);
+  font-weight: normal;
   color: var(--body-text-color);
+  padding: 1rem;
 }
+
+.card {
+  background: var(--card-bg);
+  border: var(--card-border);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
