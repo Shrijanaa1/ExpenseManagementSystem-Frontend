@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import Aura from '@primevue/themes/aura';
 
 import PrimeVue from 'primevue/config'
 import Button from 'primevue/button'
@@ -11,7 +10,6 @@ import InputNumber from 'primevue/inputnumber'
 import Column from 'primevue/column'
 import DataTable from 'primevue/datatable'
 import Dialog from 'primevue/dialog';
-
 
 import Menubar from 'primevue/menubar';
 import Avatar from 'primevue/avatar';
@@ -25,22 +23,41 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 
+//For theme Switcher
+import SelectButton from 'primevue/selectbutton';
+import ToggleSwitch from 'primevue/toggleswitch';
+
+import AppState from './plugins/appState.js';
+import Noir from './presets/Noir.js';
+import StyleClass from 'primevue/styleclass';
 
 import 'primeicons/primeicons.css';
-import './assets/base.css';
-import 'primeflex/primeflex.css';
+import '@/assets/base.css';
+// import 'primeflex/primeflex.css';
 
    
 const app = createApp(App)
 
 app.use(router)
-// app.use(PrimeVue);
 
-app.use(PrimeVue,{
+// app.use(PrimeVue,{
+//     theme: {
+//         preset:Aura
+//     }
+// });
+
+app.use(PrimeVue, {
     theme: {
-        preset:Aura
+        preset: Noir,
+        options: {
+            prefix: 'p',
+            darkModeSelector: '.p-dark',
+            cssLayer: false,
+        }
     }
 });
+
+app.use(AppState);
 
 // Register Toast and ConfirmDialog globally
 app.use(ConfirmationService);
@@ -61,5 +78,10 @@ app.component('Ripple', Ripple)
 app.component('PanelMenu', PanelMenu)
 app.component('Toast', Toast);
 app.component('ConfirmDialog', ConfirmDialog);
+
+app.component('SelectButton', SelectButton);
+app.component('ToggleSwitch',ToggleSwitch);
+// Register StyleClass directive globally
+app.directive('styleclass', StyleClass);
 
 app.mount('#app')
