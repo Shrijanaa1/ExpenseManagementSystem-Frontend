@@ -231,7 +231,6 @@
 
     const content = `
       <div>
-      <h1>Test Print</h1>
       <h2>Budget Details for ID: ${budget.id}</h2>
       <p><strong>Category:</strong> ${budget.category}</p>
       <p><strong>Budget Limit:</strong> ${budget.budgetLimit}</p>
@@ -242,6 +241,11 @@
       </div>
     `;
 
+    // Create an element to hold the custom content temporarily
+    const element = document.createElement('div');
+    element.innerHTML = content;
+    document.body.appendChild(element); // Append it to the body to use it for PDF generation
+
     const opt = {
       margin: [10,10],
       filename: `budget-${budget.id}-details.pdf`,
@@ -250,8 +254,22 @@
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    //convert the custom HTML content to a pdf
-    html2pdf().set(opt).from(content).save();
+    // Create a PDF and convert it to Blob
+    html2pdf().from(element).set(opt).toPdf().output('blob').then(function (pdfBlob) {
+    // Create a URL for the Blob with the correct MIME type
+    const url = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf'} ));
+
+    // Open the URL in a new tab for preview
+    const newWindow = window.open(url, '_blank');
+    
+    if( !newWindow){  
+      alert("Please allow popups for this site to view the PDF.");
+    }
+  });
+
+   // Remove the temporary element after generating the PDF
+   document.body.removeChild(element);
+
   }
  
   onMounted(loadBudgets); //perform actions when the component is mounted (e.g., fetch data)
