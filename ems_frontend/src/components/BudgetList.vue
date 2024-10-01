@@ -77,7 +77,7 @@
       <Dialog v-model:visible="paperSizeDialogVisible" header="Select Paper Size" :closable="true" style="width: 30vw;">
         <div>
           <p>Select the paper size for the PDF:</p>
-          <Select v-model="selectedPaperSize" :options="paperSizes" optionLabel="label" placeholder="Select Paper Size" />
+          <Select v-model="selectedPaperSize" :options="paperSizes" optionLabel="label" optionValue="value" placeholder="Select Paper Size" />
         </div>
         <div class="p-dialog-footer" style="margin-top: 1rem;">
           <Button label="Generate PDF" icon="pi pi-check" @click="generatePDF" />
@@ -236,7 +236,8 @@ const paperSizes = ref([
     { label: 'A3', value: 'a3' },
     { label: 'A4', value: 'a4' },
     { label: 'A5', value: 'a5' },
-    { label: 'Letter', value: 'letter' }
+    { label: 'Letter', value: 'letter' },
+    { label: '58x200 mm', value: [58, 200] }
 ]);
 
   const previewPDF = () => {
