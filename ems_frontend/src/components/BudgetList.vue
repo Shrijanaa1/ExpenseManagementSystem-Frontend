@@ -209,8 +209,21 @@
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-    html2pdf().set(opt).from(element).save();
-    };
+    
+    // Create a PDF and convert it to Blob
+    html2pdf().from(element).set(opt).toPdf().output('blob').then(function (pdfBlob) {
+    // Generates a downloadable or viewable link for the Blob
+    const url = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf'} ));
+    
+    // Open the URL in a new tab for preview
+    const newWindow = window.open(url, '_blank');
+
+    if(!newWindow){  
+      alert("Please allow popups for this site to view the PDF.");
+    } 
+
+    });
+  };
 
   //Export specific row as PDF
   const exportBudgetToPDF = (budget) => {
