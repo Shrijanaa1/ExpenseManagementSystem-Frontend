@@ -39,7 +39,7 @@
           <template #body="slotProps">
             <Button icon="pi pi-pencil" @click="editBudget(slotProps.data)" />
             <Button icon="pi pi-trash" @click="confirmDeleteBudget(slotProps.data.id)" />
-            <Button icon="pi pi-file-pdf" @click="exportBudgetToPDF(slotProps.data)" />
+            <Button icon="pi pi-eye" @click="viewBudget(slotProps.data)" />
           </template>
         </Column>
       </DataTable>
@@ -51,6 +51,26 @@
         :closable="true"
       >
         <BudgetForm v-if="selectedBudget" :budget="selectedBudget" @save="saveBudget" @close="closeDialog" />
+      </Dialog>
+
+      <!-- Dialog for viewing budget details -->
+      <Dialog
+        header="Budget Details"
+        v-model:visible="viewDialogVisible"
+        :closable="true"
+      >
+        <div v-if="selectedBudget">
+          <p><strong>ID:</strong> {{ selectedBudget.id }}</p>
+          <p><strong>Category:</strong> {{ selectedBudget.category }}</p>
+          <p><strong>Budget Limit:</strong> {{ selectedBudget.budgetLimit }}</p>
+          <p><strong>Remaining Amount:</strong> {{ selectedBudget.remainingAmount }}</p>
+          <p><strong>Start Date:</strong> {{ selectedBudget.startDate }}</p>
+          <p><strong>End Date:</strong> {{ selectedBudget.endDate }}</p>
+          <p><strong>Remarks:</strong> {{ selectedBudget.remarks }}</p>
+
+          <!-- Print Button -->
+          <Button label="Print" icon="pi pi-print" @click="printBudgetDetails" />
+        </div>
       </Dialog>
 
       <!-- Confirm and Toast components-->
@@ -202,7 +222,7 @@ const previewPDF = () => {
   const element = document.querySelector('.datatable'); //selects datatable element
 
   // Temporarily hide action buttons and pagination (by adding a class to hide them)
-  // const actionButtons = document.querySelectorAll('.pi-pencil, .pi-trash, .pi-file-pdf');
+  // const actionButtons = document.querySelectorAll('.pi-pencil, .pi-trash, .pi-eye');
   const actionColumn = document.querySelectorAll('th:last-child, td:last-child');
   const paginator = document.querySelector('.p-paginator');
 
@@ -214,9 +234,9 @@ const previewPDF = () => {
   const opt = {
     margin: [10, 10],
     filename: 'budget-list.pdf',
-    // image: { type: 'jpeg', quality: 0.98 },
-    // html2canvas: { scale: 2 },
-    // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   }; 
 
   // Create a PDF and convert it to Blob
@@ -238,8 +258,16 @@ const previewPDF = () => {
   });
 };
 
-//Export specific row as PDF
-const exportBudgetToPDF = (budget) => {
+const viewDialogVisible = ref(false);
+
+//view budget details
+const viewBudget = (budget) => {
+  selectedBudget.value = { ...budget };  // Create a copy of the Budget object for viewing
+  viewDialogVisible.value = true; //open the view dialog
+}
+
+//Print budget details
+const printBudgetDetails = (budget) => {
   // Custom HTML content for the print preview with budget details
   const content = `
     <div>
