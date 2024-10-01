@@ -22,6 +22,7 @@
           currentPageReportTemplate="{first} to {last} of {totalRecords}"
           @page="onPage"
           responsiveLayout="scroll"
+          class="datatable"
         >
           <template #empty> No budgets found. </template>
           <template #loading> Loading budget data. Please wait. </template>
@@ -200,7 +201,7 @@
 
   //Export DataTable as pdf
   const exportToPDF = () => {
-    const element = document.querySelector('.budgetList-content');
+    const element = document.querySelector('.datatable');
 
     const opt = {
       margin: [10,10],
