@@ -1,6 +1,8 @@
 <template>
     <div class="card flex justify-end p-2 mb-4">
         <ul class="flex list-none m-0 p-0 gap-2 items-center">
+
+            <!-- Theme Toggler Button -->
             <li>
                 <button type="button"
                     class="inline-flex w-8 h-8 p-0 items-center justify-center surface-0 dark:surface-800 border border-surface-200 dark:border-surface-600 rounded"
@@ -8,8 +10,11 @@
                     <i :class="`dark:text-white pi ${iconClass}`" />
                 </button>
             </li>
+
+            <!-- Palette Color Picker Button -->
             <li class="relative">
-                <button v-styleclass="{
+                <button @click="togglePalette"
+                v-styleclass="{
                     selector: '@next',
                     enterFromClass: 'hidden',
                     enterActiveClass: 'animate-scalein',
@@ -20,7 +25,9 @@
                     class="inline-flex w-8 h-8 p-0 items-center justify-center surface-0 dark:surface-800 border border-surface-200 dark:border-surface-600 rounded">
                     <i class="pi pi-palette dark:text-white"></i>
                 </button>
-                <div
+
+                <!-- Color Picker Dropdown: Initially Hidden -->
+                <div v-show="showPaletteOptions"
                     class="absolute top-[2.5rem] right-0 hidden w-[16rem] p-3 bg-white dark:bg-surface-800 rounded-md shadow border border-surface-200 dark:border-surface-700 flex-col justify-start items-start gap-3.5 inline-flex origin-top z-10">
                     <div class="flex-col justify-start items-start gap-2 inline-flex pr-4">
                         <span class="text-sm font-medium">Primary Colors</span>
@@ -82,6 +89,7 @@ export default {
             presets: Object.keys(presets),
             selectedPrimaryColor: 'noir',
             selectedSurfaceColor: null,
+            showPaletteOptions: false, // Controls the palette dropdown visibility
             primaryColors: [
                 { name: 'noir', palette: {} },
                 {
@@ -487,6 +495,10 @@ export default {
 
             root.classList.toggle('p-dark');
             this.iconClass = this.iconClass === 'pi-moon' ? 'pi-sun' : 'pi-moon';
+        },
+        togglePalette() {
+            //Toggle the visibility of palette options
+            this.showPaletteOptions = !this.showPaletteOptions;
         },
         getPresetExt() {
             const color = this.primaryColors.find(
