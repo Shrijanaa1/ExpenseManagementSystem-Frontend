@@ -199,14 +199,16 @@ const reloadBudgets = async () => {
 };
 
 const previewPDF = () => {
-  const element = document.querySelector('.datatable'); //selects an element on web page that has this class 
+  const element = document.querySelector('.datatable'); //selects datatable element
 
   // Temporarily hide action buttons and pagination (by adding a class to hide them)
-  const actionButtons = document.querySelectorAll('.pi-pencil, .pi-trash, .pi-file-pdf');
+  // const actionButtons = document.querySelectorAll('.pi-pencil, .pi-trash, .pi-file-pdf');
+  const actionColumn = document.querySelectorAll('th:last-child, td:last-child');
   const paginator = document.querySelector('.p-paginator');
 
   //Hide elements
-  actionButtons.forEach(btn => btn.style.display = 'none');
+  // actionButtons.forEach(btn => btn.style.display = 'none');
+  actionColumn.forEach(col => col.style.display = 'none');
   if(paginator) paginator.style.display = 'none';
 
   const opt = {
@@ -230,7 +232,8 @@ const previewPDF = () => {
     } 
 
     //Restore elements visibility after generating pdf
-    actionButtons.forEach(btn => btn.style.display = '');
+    // actionButtons.forEach(btn => btn.style.display = '');
+    actionColumn.forEach(col => col.style.display = '');
     if(paginator) paginator.style.display = '';
   });
 };
