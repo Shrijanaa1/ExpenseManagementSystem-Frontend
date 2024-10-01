@@ -240,16 +240,19 @@ const previewPDF = () => {
   }; 
 
   // Create a PDF and convert it to Blob
-  html2pdf().from(element).set(opt).toPdf().output('blob').then(function (pdfBlob) {
+  html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
     // Generates a downloadable or viewable link for the Blob
-    const url = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf'} ));
+    // const url = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf'} ));
     
     // Open the URL in a new tab for preview
-    const newWindow = window.open(url, '_blank');
+    // const newWindow = window.open(url, '_blank');
 
-    if(!newWindow){  
-      alert("Please allow popups for this site to view the PDF.");
-    } 
+    // if(!newWindow){  
+    //   alert("Please allow popups for this site to view the PDF.");
+    // } 
+
+    pdf.autoPrint();  // Automatically trigger the print dialog
+    window.open(pdf.output('bloburl'), '_blank'); // Open the PDF in a new tab with print dialog
 
     //Restore elements visibility after generating pdf
     // actionButtons.forEach(btn => btn.style.display = '');
@@ -289,20 +292,14 @@ const printBudgetDetails = (budget) => {
   const opt = {
     margin: [10, 10], //10mm margin on all sides
     filename: `budget-details-${budget.id}.pdf`,
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
   // Create a PDF and convert it to Blob
-  html2pdf().from(element).set(opt).toPdf().output('blob').then(function (pdfBlob) {
-    // Create a URL for the Blob with the correct MIME type
-    const url = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf'} ));
-
-    // Open the URL in a new tab for preview
-    const newWindow = window.open(url, '_blank');
+  html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
     
-    if( !newWindow){  
-      alert("Please allow popups for this site to view the PDF.");
-    }
+    pdf.autoPrint();  // Automatically trigger the print dialog
+    window.open(pdf.output('bloburl'), '_blank'); // Open the PDF in a new tab with print dialog
  
   });
 
