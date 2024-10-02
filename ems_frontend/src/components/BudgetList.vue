@@ -283,50 +283,6 @@ const paperSizes = ref([
     });
   };
 
-
-// const previewPDF = () => {
-//   const element = document.querySelector('.datatable'); //selects datatable element
-
-//   // Temporarily hide action buttons and pagination (by adding a class to hide them)
-//   // const actionButtons = document.querySelectorAll('.pi-pencil, .pi-trash, .pi-eye');
-//   const actionColumn = document.querySelectorAll('th:last-child, td:last-child');
-//   const paginator = document.querySelector('.p-paginator');
-
-//   //Hide elements
-//   // actionButtons.forEach(btn => btn.style.display = 'none');
-//   actionColumn.forEach(col => col.style.display = 'none');
-//   if(paginator) paginator.style.display = 'none';
-
-//   const opt = {
-//     margin: [10, 10],
-//     filename: 'budget-list.pdf',
-//     image: { type: 'jpeg', quality: 0.98 },
-//     html2canvas: { scale: 2 },
-//     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-//   }; 
-
-//   // Create a PDF and convert it to Blob
-//   html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
-//     // Generates a downloadable or viewable link for the Blob
-//     // const url = URL.createObjectURL(new Blob([pdfBlob], { type: 'application/pdf'} ));
-    
-//     // Open the URL in a new tab for preview
-//     // const newWindow = window.open(url, '_blank');
-
-//     // if(!newWindow){  
-//     //   alert("Please allow popups for this site to view the PDF.");
-//     // } 
-
-//     pdf.autoPrint();  // Automatically trigger the print dialog
-//     window.open(pdf.output('bloburl'), '_blank'); // Open the PDF in a new tab with print dialog
-
-//     //Restore elements visibility after generating pdf
-//     // actionButtons.forEach(btn => btn.style.display = '');
-//     actionColumn.forEach(col => col.style.display = '');
-//     if(paginator) paginator.style.display = '';
-//   });
-// };
-
 const viewDialogVisible = ref(false);
 
 //view budget details
@@ -358,12 +314,11 @@ const printBudgetDetails = (budget) => {
   const opt = {
     margin: [10, 10], //10mm margin on all sides
     filename: `budget-details-${budget.id}.pdf`,
-    // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
   // Create a PDF
   html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
-    
     pdf.autoPrint();  // Automatically trigger the print dialog
     window.open(pdf.output('bloburl'), '_blank'); // Open the PDF in a new tab with print dialog
  
