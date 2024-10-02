@@ -1,6 +1,6 @@
 <template>
     <div class="card flex justify-end p-2 mb-4">
-        <ul class="flex list-none m-0 p-0 gap-2 items-center">
+        <ul class="flex m-0 p-0 gap-2 items-center">
 
             <!-- Theme Toggler Button -->
             <li>
@@ -497,8 +497,8 @@ export default {
             this.iconClass = this.iconClass === 'pi-moon' ? 'pi-sun' : 'pi-moon';
         },
         togglePalette() {
-            //Toggle the visibility of palette options
-            this.showPaletteOptions = !this.showPaletteOptions;
+            //sets the value of showPaletteOptions to the opposite of its current state (! NOT Operator reverse value )
+            this.showPaletteOptions = !this.showPaletteOptions; 
         },
         getPresetExt() {
             const color = this.primaryColors.find(

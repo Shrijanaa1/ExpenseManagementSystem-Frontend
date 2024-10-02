@@ -248,29 +248,36 @@ const paperSizes = ref([
     
     const element = document.querySelector('.datatable'); //selects datatable element
 
-    // Temporarily hide columns and pagination (by adding a class to hide them)
-    const actionColumn = document.querySelectorAll('th:last-child, td:last-child');
-    const paginator = document.querySelector('.p-paginator');
+    const actionColumn = document.querySelectorAll('th:last-child, td:last-child'); //Selects last column of table and store in actionCoulmn variable
+    const paginator = document.querySelector('.p-paginator'); //It selects pagination component
 
     //Hide elements
     // actionButtons.forEach(btn => btn.style.display = 'none');
     actionColumn.forEach(col => col.style.display = 'none');
     if(paginator) paginator.style.display = 'none';
 
-    const opt = {
-      margin: [10, 10],
+    const selectedSize  = selectedPaperSize.value || 'a4';
+    const scale = selectedSize === 'a3' ? 1.2 
+             : selectedSize === 'a5' ? 0.6 //reduces the content size to 60% for A5 paper
+             : selectedSize === 'a4' ? 0.85 
+             : 0.9; // Default 
+
+    //options to customize PDF
+    const opt = {    
+      margin: [10, 10], 
       filename: 'budget-list.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: selectedPaperSize.value || 'a4', orientation: 'portrait' }
+      html2canvas: { scale: 2 * scale }, //for resolution of content
+      jsPDF: { unit: 'mm', format: selectedSize, orientation: 'portrait' }
     }; 
 
-    // Create a PDF and convert it to Blob
+    // Create a PDF 
     html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
 
       pdf.autoPrint();  // Automatically trigger the print dialog
       window.open(pdf.output('bloburl'), '_blank'); // Open the PDF in a new tab with print dialog
       
+      //Restores visibility of previously hidden elements
       actionColumn.forEach(col => col.style.display = '');
       if(paginator) paginator.style.display = '';
     });
@@ -354,7 +361,7 @@ const printBudgetDetails = (budget) => {
     // jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
-  // Create a PDF and convert it to Blob
+  // Create a PDF
   html2pdf().from(element).set(opt).toPdf().get('pdf').then(function (pdf) {
     
     pdf.autoPrint();  // Automatically trigger the print dialog
