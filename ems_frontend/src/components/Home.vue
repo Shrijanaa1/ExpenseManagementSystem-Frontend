@@ -1,9 +1,9 @@
 <template>
-    <div class="home-container">
-        <div :class="['home-content', { 'sidebar-open': sidebarVisible }]">
+    <!-- <div class="home-container">
+        <div :class="['home-content', { 'sidebar-open': sidebarVisible }]"> -->
         <h2> This is home page.</h2>
-    </div>
-    </div>
+    <!-- </div>
+    </div> -->
 </template>
 
 <script setup>

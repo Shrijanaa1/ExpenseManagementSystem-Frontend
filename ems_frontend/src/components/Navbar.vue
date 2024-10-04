@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';   //Creates reactive variable
+import { ref, defineEmits } from 'vue';   //Creates reactive variable
 import { useRouter } from 'vue-router';    //for navigation
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
@@ -39,6 +39,18 @@ const router = useRouter(); //Initialize router
 const searchQuery = ref('');   // Declares a reactive searchQuery variable with an initial value of an empty string.
 
 const displayThemeSwitcher = ref(false);
+
+//sidebar visibility state management
+const sidebarVisible = ref(false);
+
+//Toggle sidebar visibility
+const toggleSidebar = () => {
+  sidebarVisible.value = !sidebarVisible.value;
+  emit('toggle-sidebar');  // Emit the event to notify parent (App.vue)
+};
+
+// Emit event to parent when sidebar is toggled
+const emit = defineEmits(['toggle-sidebar']);
 
 // Menu Items for Top Navbar
 const items = ref([
@@ -120,11 +132,11 @@ const itemsSidebar = ref([
 ]);
 
 
-//Props to accept sidebar state and toggle function, props controlled by parent component(App.vue)
-const props = defineProps ({
-sidebarVisible: Boolean,
-toggleSidebar: Function,
-});
+// //Props to accept sidebar state and toggle function, props controlled by parent component(App.vue)
+// const props = defineProps ({
+// sidebarVisible: Boolean,
+// toggleSidebar: Function,
+// });
 
 
 </script>

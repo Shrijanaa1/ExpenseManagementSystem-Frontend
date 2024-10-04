@@ -1,10 +1,10 @@
 <template>
   <!-- Navbar component with sidebarVisible prop and toggleSidebar function-->
-  <Navbar :sidebarVisible="sidebarVisible" :toggleSidebar="toggleSidebar"/>
+  <Navbar @toggle-sidebar="toggleSidebar"/>
   
   <!-- Main content(RouterView) -->
-   <div class="main-content">
-      <RouterView :sidebarVisible="sidebarVisible"/> <!-- Pass Sidebar visible down -->
+   <div class="main-content" :class="{ 'sidebar-open': sidebarVisible }">
+      <RouterView /> <!-- Pass Sidebar visible down -->
    </div>
 </template>
 
@@ -28,5 +28,10 @@ const toggleSidebar = () => {
 .main-content{
   padding-top: 55px;
   transition: margin-left 0.3s ease; /* Smooth transition for content shift */
+}
+
+/* When sidebar is open, adjust the main content */
+.sidebar-open {
+  margin-left: 250px;
 }
 </style>
