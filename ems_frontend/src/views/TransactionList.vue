@@ -1,7 +1,5 @@
 <template>
-  <div class="transactionList-container">
-    <div :class="['transactionList-content', { 'sidebar-open': sidebarVisible }]">
-      <h2>Transaction List</h2>
+    <h2>Transaction List</h2>
 
       <div class="add-transaction-container">
         <Button icon="pi pi-plus" class="add-button" @click="openDialog" />
@@ -63,22 +61,15 @@
       <!-- Confirm and Toast components-->
       <Toast />
       <ConfirmDialog />
-    </div>
-  </div>
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import transactionService from '../router/services';
 import TransactionForm from './TransactionForm.vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/useToast'
-
-
-const props = defineProps({
-  sidebarVisible: Boolean,
-});
 
 const transactions = ref([]); //holds list of transactions that will be displayed in UI
 const selectedTransaction = ref(null); //used for editing or viewing details
@@ -202,21 +193,6 @@ onMounted(loadTransactions); //perform actions when the component is mounted (e.
 </script>
 
 <style>
-.transactionList-container {
-  display: flex;
-}
-
-.transactionList-content {
-  padding-right: 1rem;
-  flex-grow: 1;
-  width: 100%;
-  transition: margin-left 0.3s ease;
-}
-
-.transactionList-content.sidebar-open {
-  margin-left: 250px;
-}
-
 .p-button {
   margin-right: 5px;
 }
