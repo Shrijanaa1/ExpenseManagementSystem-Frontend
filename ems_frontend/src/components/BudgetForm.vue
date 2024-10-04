@@ -1,6 +1,4 @@
 <template>
-    <div class="budgetForm-container">
-        <div :class="['budgetForm-content', { 'sidebar-open': sidebarVisible }]">
 
     <div class="form-wrapper">
         <form @submit.prevent="handleSubmit" class="form-container">
@@ -60,8 +58,6 @@
 
         </form>
     </div>
-    </div>
-</div>
 
 </template>
 
@@ -78,7 +74,6 @@ import { defineProps } from 'vue';
 //Receive the sidebarVisible prop from the parent component(App.vue)
 const props = defineProps({
     budget: Object,
-    sidebarVisible: Boolean, // Add sidebarVisible prop
 });
 
 const emit = defineEmits(['save', 'close']);
@@ -165,21 +160,6 @@ onMounted(() => {
 
 .error {
   color: red;
-}
-
-.budgetForm-container {
-  display: flex;
-}
-
-.budgetForm-content {
-  padding-right: 1rem;
-  flex-grow: 1;
-  width: 100%;
-  transition: margin-left 0.3s ease;
-}
-
-.budgetForm-content.sidebar-open {
-  margin-left: 250px;
 }
 
 </style>
