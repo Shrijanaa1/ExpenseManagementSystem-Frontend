@@ -1,7 +1,5 @@
 <template>
-  <div class="budgetList-container">
-    <div :class="['budgetList-content', { 'sidebar-open': sidebarVisible }]">
-      <h2>Budget List</h2>
+    <h2>Budget List</h2>
 
       <div class="add-budget-container">
         <Button icon="pi pi-plus" class="add-button" @click="openDialog" />
@@ -87,22 +85,16 @@
       <!-- Confirm and Toast components-->
       <Toast />
       <ConfirmDialog />
-    </div>
-  </div>
 
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import budgetService from '../router/services';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/useToast'
 import BudgetForm from './BudgetForm.vue';
 import html2pdf from 'html2pdf.js';
-
-const props = defineProps({
-  sidebarVisible: Boolean,
-});
 
 const budgets = ref([]); //holds list of Budgets that will be displayed in UI
 const selectedBudget = ref(null); //used for editing or viewing details
@@ -334,21 +326,6 @@ onMounted(loadBudgets); //perform actions when the component is mounted (e.g., f
 </script>
 
 <style scoped>
-.budgetList-container {
-  display: flex;
-}
-
-.budgetList-content {
-  padding-right: 1rem;
-  flex-grow: 1;
-  width: 100%;
-  transition: margin-left 0.3s ease;
-}
-
-.budgetList-content.sidebar-open {
-  margin-left: 250px;
-}
-
 .p-button {
   margin-right: 5px;
 }
