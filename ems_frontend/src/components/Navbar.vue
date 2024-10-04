@@ -36,8 +36,6 @@ import ThemeSwitcher from './ThemeSwitcher.vue';
 
 const router = useRouter(); //Initialize router
 
-const searchQuery = ref('');   // Declares a reactive searchQuery variable with an initial value of an empty string.
-
 const displayThemeSwitcher = ref(false);
 
 //sidebar visibility state management
@@ -57,12 +55,12 @@ const items = ref([
   {
     label: 'Home',
     icon: 'pi pi-home',
-    command: () => { router.push({ name: 'home' }) } //Navigate to home
+    command: () => { router.push({ name: 'home' }) } 
   },
   {
     label: 'Transactions',
     icon: 'pi pi-money-bill',
-    command: () => { router.push({ name: 'transactionList' }) } //Navigate to home
+    command: () => { router.push({ name: 'transactionList' }) } 
   },
   {
     label: 'Budgets',
@@ -130,14 +128,6 @@ const itemsSidebar = ref([
   icon: 'pi pi-sign-out' 
 }
 ]);
-
-
-// //Props to accept sidebar state and toggle function, props controlled by parent component(App.vue)
-// const props = defineProps ({
-// sidebarVisible: Boolean,
-// toggleSidebar: Function,
-// });
-
 
 </script>
 

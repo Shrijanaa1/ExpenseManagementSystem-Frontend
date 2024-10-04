@@ -1,10 +1,9 @@
 <template>
-  <!-- Navbar component with sidebarVisible prop and toggleSidebar function-->
   <Navbar @toggle-sidebar="toggleSidebar"/>
   
   <!-- Main content(RouterView) -->
    <div class="main-content" :class="{ 'sidebar-open': sidebarVisible }">
-      <RouterView /> <!-- Pass Sidebar visible down -->
+      <RouterView /> 
    </div>
 </template>
 
